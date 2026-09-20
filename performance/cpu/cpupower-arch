@@ -1,0 +1,2 @@
+# Arch - /etc/default/cpupower
+governor='performance'

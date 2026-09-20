@@ -1,0 +1,2 @@
+# Debian/Ubuntu - /etc/default/cpufrequtils
+GOVERNOR="performance"

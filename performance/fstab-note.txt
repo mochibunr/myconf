@@ -1,0 +1,3 @@
+# Add noatime to / in /etc/fstab (both Debian and Arch):
+# UUID=xxx / ext4 errors=remount-ro,noatime 0 1
+# Then: sudo mount -o remount /
