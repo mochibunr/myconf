@@ -1,6 +1,0 @@
-2026/09/13-13:27:10.079 a21 Creating DB /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_dashboard.zed.dev_0.indexeddb.leveldb since it was missing.
-2026/09/13-13:27:10.083 a21 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_dashboard.zed.dev_0.indexeddb.leveldb/MANIFEST-000001
-2026/09/13-15:16:23.791 a22 Level-0 table #5: started
-2026/09/13-15:16:23.795 a22 Level-0 table #5: 3001 bytes OK
-2026/09/13-15:16:23.799 a22 Delete type=0 #3
-2026/09/13-15:16:23.800 a22 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

@@ -2,590 +2,478 @@
 # cross-platform.sh - Cross-platform dev dependencies installer
 # Supports: Arch, Debian/Ubuntu/Zorin, Fedora, openSUSE, macOS
 # Workflow: PHASE 1 = INSTALL programs/dependencies  ->  PHASE 2 = TWEAKS/CONFIG/PATH (.zshrc/.bashrc)
-# Installs: java 17-26, neovim, scrcpy, git, cmake, dart/flutter, node 24.16, python 3.11, curl, 7zip, unzip, clang, pkg-config, ninja, libGLU, libstdc, Android ROM/Kernel deps, Android SDK
-# Usage: bash ~/.config/performance/scripts/cross-platform.sh [--dry-run] [--yes] [--only java,node] [--arch|--debian|--fedora|--macos]
-# Location: ~/.config/performance/scripts/cross-platform.sh
+# Usage: bash ~/.config/performance/scripts/cross-platform.sh [--dry-run] [--yes] [--only a,b] [--skip a,b] [--list] [--interactive] [--minimal|--full|--dev|--android] [--arch|--debian|--fedora|--macos]
 
 set -e
-# Colors
-RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
-log() { echo -e "${GREEN}[INFO]${NC} $*"; }
-warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
-err() { echo -e "${RED}[ERR]${NC} $*"; }
-info() { echo -e "${BLUE}[*]${NC} $*"; }
+# ── UI palette ──────────────────────────────────────────────
+if [ -t 1 ]; then
+  BOLD='\033[1m'; DIM='\033[2m'
+  RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+  BLUE='\033[0;34m'; MAGENTA='\033[0;35m'; CYAN='\033[0;36m'
+  NC='\033[0m'
+else
+  BOLD=''; DIM=''; RED=''; GREEN=''; YELLOW=''; BLUE=''; MAGENTA=''; CYAN=''; NC=''
+fi
+log()  { echo -e "${GREEN}✔${NC} $*"; }
+warn() { echo -e "${YELLOW}▲${NC} $*"; }
+err()  { echo -e "${RED}✘${NC} $*" >&2; }
+info() { echo -e "${BLUE}●${NC} $*"; }
+dry()  { echo -e "${CYAN}[DRY]${NC} $*"; }
 
-DRY_RUN=false
-AUTO_YES=false
-ONLY=""
-FORCE_OS=""
+START_TS=$(date +%s)
+STEP=0
+TOTAL=38
+PASSED=()
+FAILED=()
+SKIPPED=()
+
+banner() {
+  echo -e "${BOLD}${CYAN}"
+  cat <<'BANNER'
+   ____                 __                          ___  __
+  / ___|_ __ ___  ___  / _|_ __   | | __ _| |_ / _| ___  _ __ _ __ ___
+ | |   | '__/ _ \/ __|| |_| '_ \  | |/ _` | __| |_ / _ \| '__| '_ ` _ \
+ | |___| | |  __/\__ \|  _| |_) | | | (_| | |_|  _| (_) | |  | | | | | |
+  \____|_|  \___||___/|_| | .__/  |_|\__,_|\__|_|  \___/|_|  |_| |_| |_|
+                          |_|
+BANNER
+  echo -e "${NC}${DIM}  Cross-platform dev setup  •  PHASE 1 INSTALL → PHASE 2 TWEAKS/PATH${NC}"
+  echo ""
+}
+
+phase_hdr() { echo -e "\n${BOLD}${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n${BOLD}$1${NC}\n${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; }
+
+section() { # section "cat" "Human title"
+  STEP=$((STEP+1))
+  printf "${BOLD}${BLUE}[%02d/%02d]${NC} ${BOLD}%s${NC} ${DIM} (%s)${NC}\n" "$STEP" "$TOTAL" "$2" "$1"
+}
+
+ok()   { PASSED+=("$1"); log "$1 done"; }
+fail() { FAILED+=("$1"); err "$1 failed (continuing)"; }
+skip() { SKIPPED+=("$1"); echo -e "${DIM}  ↷ skipped $1${NC}"; }
+
+# ── args ────────────────────────────────────────────────────
+DRY_RUN=false; AUTO_YES=false; ONLY=""; SKIP=""; FORCE_OS=""; INTERACTIVE=false; LIST_ONLY=false; PROFILE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run) DRY_RUN=true; shift ;;
     --yes|-y) AUTO_YES=true; shift ;;
-    --only)
-      ONLY="$2"
-      shift 2
-      ;;
+    --only) ONLY="$2"; shift 2 ;;
     --only=*) ONLY="${1#--only=}"; shift ;;
+    --skip) SKIP="$2"; shift 2 ;;
+    --skip=*) SKIP="${1#--skip=}"; shift ;;
+    --interactive|-i) INTERACTIVE=true; shift ;;
+    --list) LIST_ONLY=true; shift ;;
+    --minimal) PROFILE="minimal"; shift ;;
+    --full) PROFILE="full"; shift ;;
+    --dev) PROFILE="dev"; shift ;;
+    --android) PROFILE="android"; shift ;;
     --arch) FORCE_OS="arch"; shift ;;
     --debian) FORCE_OS="debian"; shift ;;
     --fedora) FORCE_OS="fedora"; shift ;;
+    --suse) FORCE_OS="suse"; shift ;;
     --macos) FORCE_OS="macos"; shift ;;
-    --help|-h) cat <<EOF
+    --help|-h)
+      cat <<EOF
+${BOLD}cross-platform.sh${NC} — install deps (PHASE 1) then tweaks/PATH (PHASE 2)
+
 Usage: $0 [options]
-  --dry-run        Show what would be installed
-  --yes            Auto yes, no prompt
-  --only a,b,c     Only install categories: java,neovim,scrcpy,git,cmake,dart,node,python,curl,7zip,unzip,clang,pkg,ninja,glu,stdc,android-rom,android-kernel,sdk,base
-  --arch/--debian/--fedora/--macos  Force OS detection
-  --help           Show this help
+  --dry-run            preview only
+  --yes, -y            no prompt
+  --only a,b,c         only these categories
+  --skip a,b,c         skip these categories
+  --interactive, -i    ask per category
+  --list               list categories and exit
+  --minimal            base+git+curl+utils only
+  --dev                minimal + languages + containers + editors
+  --android            dev + android-rom + android-kernel + sdk
+  --full               everything
+  --arch/--debian/--fedora/--suse/--macos  force OS
+  --help               this help
+
+Categories:
+  base shell editors git scrcpy cmake dart node python java java-tools
+  curl 7zip unzip pkg clang ninja glu stdc go rust js-tools python-tools
+  ruby php lua zig kotlin github-cli db containers k8s media net-tools
+  docs fonts sysutils security ssh android-rom android-kernel sdk
+  adb fastboot android-udev usb-tools virt extra-media extra-dev fwupd
 EOF
-    exit 0 ;;
+      exit 0 ;;
     *) shift ;;
   esac
 done
 
-# Source detect-os.sh if exists
+CATEGORIES="base shell editors git scrcpy cmake dart node python java java-tools curl 7zip unzip pkg clang ninja glu stdc go rust js-tools python-tools ruby php lua zig kotlin github-cli db containers k8s media net-tools docs fonts sysutils security ssh android-rom android-kernel sdk adb fastboot android-udev usb-tools virt extra-media extra-dev fwupd"
+if $LIST_ONLY; then echo "Categories:"; for c in $CATEGORIES; do echo "  - $c"; done; echo ""; echo "Profiles: minimal dev android full"; exit 0; fi
+
+# profiles expand to ONLY/SKIP
+case "$PROFILE" in
+  minimal) ONLY="base,git,curl,unzip,7zip,sysutils,ssh,adb,usb-tools" ;;
+  dev) ONLY="base,shell,editors,git,github-cli,cmake,ninja,pkg,clang,stdc,python,python-tools,node,js-tools,go,rust,java,java-tools,containers,db,media,net-tools,docs,sysutils,security,ssh,adb,usb-tools,extra-dev,fwupd" ;;
+  android) ONLY="base,git,java,python,cmake,ninja,clang,stdc,sdk,android-rom,android-kernel,scrcpy,sysutils,adb,fastboot,android-udev,usb-tools" ;;
+  full) ONLY="" ;;
+esac
+
+# ── OS detect ───────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [ -f "$SCRIPT_DIR/detect-os.sh" ]; then
   # shellcheck source=/dev/null
-  source "$SCRIPT_DIR/detect-os.sh"
-  detect_os
+  source "$SCRIPT_DIR/detect-os.sh"; detect_os
 else
   if [ -f /etc/os-release ]; then . /etc/os-release; OS_ID=${ID,,}; OS_ID_LIKE=${ID_LIKE,,}; else OS_ID="unknown"; fi
   if [[ "$OSTYPE" == darwin* ]]; then OS="macos"; else case "$OS_ID" in arch*) OS="arch";; debian|ubuntu|zorin*) OS="debian";; fedora*) OS="fedora";; *) OS="$OS_ID";; esac; fi
 fi
-
-if [ -n "$FORCE_OS" ]; then OS="$FORCE_OS"; fi
+[ -n "$FORCE_OS" ] && OS="$FORCE_OS"
 case "$OS" in
-  arch|manjaro|endeavouros) PKG="pacman" ;;
-  debian|ubuntu|zorin) PKG="apt" ;;
-  fedora|rhel|centos) PKG="dnf" ;;
-  suse|opensuse) PKG="zypper" ;;
+  arch|manjaro|endeavouros|garuda|cachyos) PKG="pacman" ;;
+  debian|ubuntu|zorin|pop|linuxmint) PKG="apt" ;;
+  fedora|rhel|centos|rocky|almalinux) PKG="dnf" ;;
+  suse|opensuse*) PKG="zypper" ;;
   macos|darwin) PKG="brew" ;;
   *) PKG="unknown" ;;
 esac
 
-log "Detected OS: $OS (PKG: $PKG) FORCE=$FORCE_OS DRY=$DRY_RUN"
-if [ "$OS" = "unknown" ]; then warn "Unknown OS, trying apt/pacman fallback"; fi
-
 should_run() {
   local cat="$1"
+  if [ -n "$SKIP" ]; then IFS=',' read -ra S <<< "$SKIP"; for s in "${S[@]}"; do [ "$s" = "$cat" ] && return 1; done; fi
   if [ -z "$ONLY" ]; then return 0; fi
-  IFS=',' read -ra ONLY_ARR <<< "$ONLY"
-  for o in "${ONLY_ARR[@]}"; do if [ "$o" = "$cat" ]; then return 0; fi; done
+  IFS=',' read -ra O <<< "$ONLY"; for o in "${O[@]}"; do [ "$o" = "$cat" ] && return 0; done
   return 1
 }
-
-run() {
-  if $DRY_RUN; then echo -e "${CYAN}[DRY]${NC} $*"; else eval "$@"; fi
+ask() { # ask "cat" "prompt" -> 0 run, 1 skip
+  $INTERACTIVE || return 0
+  echo -e "${YELLOW}?${NC} Install $1? [Y/n] "; read -r a; [[ "$a" == n* || "$a" == N* ]] && return 1 || return 0
 }
+run() { if $DRY_RUN; then dry "$*"; else eval "$@"; fi; }
 
 install_pkg() {
-  local pkgs=("$@")
-  if [ ${#pkgs[@]} -eq 0 ]; then return 0; fi
+  local pkgs=("$@"); [ ${#pkgs[@]} -eq 0 ] && return 0
   case "$PKG" in
-    apt)
-      if $DRY_RUN; then echo "[DRY] sudo apt install -y ${pkgs[*]}"; else sudo apt update -qq 2>&1 | tail -5; sudo apt install -y "${pkgs[@]}" 2>&1 | tail -20; fi
-      ;;
-    pacman)
-      if $DRY_RUN; then echo "[DRY] sudo pacman -S --noconfirm ${pkgs[*]}"; else sudo pacman -S --noconfirm "${pkgs[@]}" 2>&1 | tail -20; fi
-      ;;
-    dnf)
-      if $DRY_RUN; then echo "[DRY] sudo dnf install -y ${pkgs[*]}"; else sudo dnf install -y "${pkgs[@]}" 2>&1 | tail -20; fi
-      ;;
-    zypper)
-      if $DRY_RUN; then echo "[DRY] sudo zypper install -y ${pkgs[*]}"; else sudo zypper install -y "${pkgs[@]}" 2>&1 | tail -20; fi
-      ;;
-    brew)
-      if $DRY_RUN; then echo "[DRY] brew install ${pkgs[*]}"; else brew install "${pkgs[@]}" 2>&1 | tail -20; fi
-      ;;
-    *) err "Unknown package manager $PKG, skipping ${pkgs[*]}"; return 1 ;;
+    apt) if $DRY_RUN; then dry "sudo apt install -y ${pkgs[*]}"; else sudo apt update -qq 2>&1 | tail -3; sudo apt install -y "${pkgs[@]}" 2>&1 | tail -8; fi ;;
+    pacman) if $DRY_RUN; then dry "sudo pacman -S --noconfirm ${pkgs[*]}"; else sudo pacman -S --noconfirm "${pkgs[@]}" 2>&1 | tail -8; fi ;;
+    dnf) if $DRY_RUN; then dry "sudo dnf install -y ${pkgs[*]}"; else sudo dnf install -y "${pkgs[@]}" 2>&1 | tail -8; fi ;;
+    zypper) if $DRY_RUN; then dry "sudo zypper install -y ${pkgs[*]}"; else sudo zypper install -y "${pkgs[@]}" 2>&1 | tail -8; fi ;;
+    brew) if $DRY_RUN; then dry "brew install ${pkgs[*]}"; else brew install "${pkgs[@]}" 2>&1 | tail -8; fi ;;
+    *) err "Unknown PKG $PKG skip ${pkgs[*]}"; return 1 ;;
   esac
 }
 
-if ! $AUTO_YES && ! $DRY_RUN; then
-  echo -e "${YELLOW}This will install many packages for $OS ($PKG). Workflow: PHASE 1 INSTALL -> PHASE 2 TWEAKS/PATH. Continue? [Y/n]${NC}"
-  read -r ans; if [[ "$ans" == n* || "$ans" == N* ]]; then exit 1; fi
+banner
+info "OS: ${BOLD}$OS${NC}  PKG: ${BOLD}$PKG${NC}  DRY: $DRY_RUN  ONLY: ${ONLY:-all}  SKIP: ${SKIP:-none}  PROFILE: ${PROFILE:-custom}"
+[ "$OS" = "unknown" ] && warn "Unknown OS — trying best effort"
+if ! $AUTO_YES && ! $DRY_RUN && ! $INTERACTIVE; then
+  echo -e "${YELLOW}Install → then Tweaks/PATH. Continue? [Y/n]${NC}"; read -r ans; [[ "$ans" == n* || "$ans" == N* ]] && exit 1
 fi
+# adjust TOTAL to active count for nicer progress
+ACTIVE=0; for c in $CATEGORIES; do should_run "$c" && ACTIVE=$((ACTIVE+1)); done
+TOTAL=$((ACTIVE*2)); [ "$TOTAL" -lt 1 ] && TOTAL=1
+STEP=0
 
 ##############################################################################
-# PHASE 1: INSTALL PROGRAMS / DEPENDENCIES (no config, no PATH tweaks here)
+phase_hdr "PHASE 1 — INSTALL PROGRAMS / DEPENDENCIES (no config here)"
 ##############################################################################
-log "##############################################################################"
-log "# PHASE 1: INSTALL PROGRAMS / DEPENDENCIES"
-log "##############################################################################"
 
-### 1. BASE ###
-if should_run base; then
-  log "=== [PHASE1] BASE: git curl wget ca-certificates ==="
+# base
+if should_run base && ask base "base tools"; then section base "Base essentials"
   case "$PKG" in
-    apt) install_pkg git curl wget ca-certificates gnupg lsb-release software-properties-common apt-transport-https ;;
-    pacman) install_pkg git curl wget ca-certificates gnupg base-devel ;;
-    dnf) install_pkg git curl wget ca-certificates gnupg2 ;;
-    brew) install_pkg git curl wget ca-certificates gnupg ;;
-  esac
-fi
+    apt) install_pkg git curl wget ca-certificates gnupg lsb-release software-properties-common apt-transport-https build-essential || fail base ;;
+    pacman) install_pkg git curl wget ca-certificates gnupg base-devel || fail base ;;
+    dnf) install_pkg git curl wget ca-certificates gnupg2 gcc gcc-c++ make || fail base ;;
+    brew) install_pkg git curl wget ca-certificates gnupg make || fail base ;;
+  esac; ok base; else skip base; fi
 
-### 2. CURL / UNZIP / 7ZIP ###
-if should_run curl; then log "=== [PHASE1] CURL ==="; case "$PKG" in apt) install_pkg curl ;; pacman) install_pkg curl ;; dnf) install_pkg curl ;; brew) install_pkg curl ;; esac; fi
-if should_run unzip; then log "=== [PHASE1] UNZIP ==="; case "$PKG" in apt) install_pkg unzip zip ;; pacman) install_pkg unzip zip ;; dnf) install_pkg unzip zip ;; brew) install_pkg unzip ;; esac; fi
-if should_run 7zip; then
-  log "=== [PHASE1] 7ZIP ==="
-  case "$PKG" in
-    apt) install_pkg p7zip-full p7zip ;;
-    pacman) install_pkg p7zip ;;
-    dnf) install_pkg p7zip p7zip-plugins ;;
-    brew) install_pkg p7zip ;;
-  esac
-fi
+# curl/unzip/7zip
+if should_run curl && ask curl "curl"; then section curl "curl"; case "$PKG" in apt|pacman|dnf) install_pkg curl || fail curl;; brew) install_pkg curl || fail curl;; esac; ok curl; else skip curl; fi
+if should_run unzip && ask unzip "unzip"; then section unzip "unzip/zip"; case "$PKG" in apt|pacman|dnf) install_pkg unzip zip || fail unzip;; brew) install_pkg unzip || fail unzip;; esac; ok unzip; else skip unzip; fi
+if should_run 7zip && ask 7zip "7zip"; then section 7zip "7-Zip"
+  case "$PKG" in apt) install_pkg p7zip-full p7zip || fail 7zip;; pacman) install_pkg p7zip || fail 7zip;; dnf) install_pkg p7zip p7zip-plugins || fail 7zip;; brew) install_pkg p7zip || fail 7zip;; esac; ok 7zip; else skip 7zip; fi
 
-### 3. PKG-CONFIG / CLANG / NINJA / CMAKE / GLU / STDC ###
-if should_run pkg; then
-  log "=== [PHASE1] PKG-CONFIG ==="
-  case "$PKG" in apt) install_pkg pkg-config ;; pacman) install_pkg pkgconf ;; dnf) install_pkg pkgconf-pkg-config ;; brew) install_pkg pkg-config ;; esac
-fi
-if should_run clang; then
-  log "=== [PHASE1] CLANG / LLVM ==="
+# shell
+if should_run shell && ask shell "shell (zsh/fish/starship/tmux)"; then section shell "Shell power tools"
   case "$PKG" in
-    apt) install_pkg clang lld lldb clang-format clang-tidy llvm ;;
-    pacman) install_pkg clang lld llvm ;;
-    dnf) install_pkg clang lld llvm ;;
-    brew) install_pkg llvm ;;
-  esac
-fi
-if should_run ninja; then
-  log "=== [PHASE1] NINJA ==="
-  case "$PKG" in apt) install_pkg ninja-build ;; pacman) install_pkg ninja ;; dnf) install_pkg ninja-build ;; brew) install_pkg ninja ;; esac
-fi
-if should_run cmake; then
-  log "=== [PHASE1] CMAKE ==="
-  case "$PKG" in apt) install_pkg cmake cmake-extras extra-cmake-modules ;; pacman) install_pkg cmake ;; dnf) install_pkg cmake ;; brew) install_pkg cmake ;; esac
-fi
-if should_run glu; then
-  log "=== [PHASE1] LIBGLU / MESA ==="
-  case "$PKG" in
-    apt) install_pkg libglu1-mesa-dev libgl1-mesa-dev mesa-common-dev libglx-dev libgl-dev freeglut3-dev ;;
-    pacman) install_pkg glu mesa libglvnd freeglut ;;
-    dnf) install_pkg mesa-libGLU mesa-libGL-devel freeglut-devel ;;
-    brew) install_pkg mesa glu freeglut ;;
-  esac
-fi
-if should_run stdc; then
-  log "=== [PHASE1] LIBSTDC ==="
-  case "$PKG" in
-    apt) install_pkg libstdc++6 libstdc++-12-dev build-essential g++ gcc-multilib ;;
-    pacman) install_pkg gcc-libs lib32-gcc-libs ;;
-    dnf) install_pkg libstdc++ libstdc++-devel gcc-c++ ;;
-    brew) install_pkg gcc ;;
-  esac
-fi
+    apt) install_pkg zsh fish starship tmux fzf fd-find bat eza zoxide direnv || install_pkg zsh fish tmux fzf || fail shell ;;
+    pacman) install_pkg zsh fish starship tmux fzf fd bat eza zoxide direnv || fail shell ;;
+    dnf) install_pkg zsh fish tmux fzf fd-find bat eza zoxide direnv || fail shell ;;
+    brew) install_pkg zsh fish starship tmux fzf fd bat eza zoxide direnv || fail shell ;;
+  esac; ok shell; else skip shell; fi
 
-### 4. PYTHON 3.11 (install only) ###
-if should_run python; then
-  log "=== [PHASE1] PYTHON 3.11 (install) ==="
+# editors
+if should_run editors && ask editors "editors"; then section editors "Editors (nvim/helix/emacs)"
   case "$PKG" in
-    apt)
-      install_pkg python3.11 python3.11-dev python3.11-venv python3-pip python3-setuptools python-is-python3 || install_pkg python3 python3-dev python3-venv python3-pip
-      ;;
-    pacman) install_pkg python python-pip python-setuptools python-virtualenv ;;
-    dnf) install_pkg python3.11 python3-pip python3-devel ;;
-    brew) install_pkg python@3.11 ;;
-  esac
-fi
+    apt) install_pkg neovim helix emacs vim nano || install_pkg neovim vim || fail editors ;;
+    pacman) install_pkg neovim helix emacs vim || fail editors ;;
+    dnf) install_pkg neovim helix emacs vim || fail editors ;;
+    brew) install_pkg neovim helix emacs vim || fail editors ;;
+  esac; ok editors; else skip editors; fi
 
-### 5. NODE 24.16 (install nvm only, no yet node binary) ###
-if should_run node; then
-  log "=== [PHASE1] NODE 24.16 (install nvm + system fallback) ==="
+# pkg/clang/ninja/cmake/glu/stdc
+if should_run pkg && ask pkg "pkg-config"; then section pkg "pkg-config"; case "$PKG" in apt) install_pkg pkg-config;; pacman) install_pkg pkgconf;; dnf) install_pkg pkgconf-pkg-config;; brew) install_pkg pkg-config;; esac; ok pkg; else skip pkg; fi
+if should_run clang && ask clang "clang"; then section clang "Clang/LLVM"
+  case "$PKG" in apt) install_pkg clang lld lldb clang-format clang-tidy llvm || fail clang;; pacman) install_pkg clang lld llvm || fail clang;; dnf) install_pkg clang lld llvm || fail clang;; brew) install_pkg llvm || fail clang;; esac; ok clang; else skip clang; fi
+if should_run ninja && ask ninja "ninja"; then section ninja "Ninja"; case "$PKG" in apt) install_pkg ninja-build;; pacman) install_pkg ninja;; dnf) install_pkg ninja-build;; brew) install_pkg ninja;; esac; ok ninja; else skip ninja; fi
+if should_run cmake && ask cmake "cmake"; then section cmake "CMake"; case "$PKG" in apt) install_pkg cmake cmake-extras extra-cmake-modules;; pacman) install_pkg cmake;; dnf) install_pkg cmake;; brew) install_pkg cmake;; esac; ok cmake; else skip cmake; fi
+if should_run glu && ask glu "glu/mesa"; then section glu "OpenGL/Mesa"
+  case "$PKG" in apt) install_pkg libglu1-mesa-dev libgl1-mesa-dev mesa-common-dev libglx-dev freeglut3-dev || fail glu;; pacman) install_pkg glu mesa libglvnd freeglut || fail glu;; dnf) install_pkg mesa-libGLU mesa-libGL-devel freeglut-devel || fail glu;; brew) install_pkg mesa glu freeglut || true;; esac; ok glu; else skip glu; fi
+if should_run stdc && ask stdc "stdc++"; then section stdc "libstdc++/toolchain"
+  case "$PKG" in apt) install_pkg libstdc++6 g++ gcc-multilib || fail stdc;; pacman) install_pkg gcc-libs lib32-gcc-libs || fail stdc;; dnf) install_pkg libstdc++ libstdc++-devel gcc-c++ || fail stdc;; brew) install_pkg gcc || fail stdc;; esac; ok stdc; else skip stdc; fi
+
+# python + tools
+if should_run python && ask python "python3.11"; then section python "Python 3.11"
+  case "$PKG" in
+    apt) install_pkg python3.11 python3.11-dev python3.11-venv python3-pip python-is-python3 || install_pkg python3 python3-dev python3-venv python3-pip || fail python ;;
+    pacman) install_pkg python python-pip python-virtualenv || fail python ;;
+    dnf) install_pkg python3.11 python3-pip python3-devel || fail python ;;
+    brew) install_pkg python@3.11 || fail python ;;
+  esac; ok python; else skip python; fi
+if should_run python-tools && ask python-tools "python-tools"; then section python-tools "Python tools (pipx/uv/ruff/poetry)"
+  case "$PKG" in apt) install_pkg pipx ruff || true;; pacman) install_pkg python-pipx uv ruff || true;; dnf) install_pkg pipx || true;; brew) install_pkg pipx uv ruff poetry || true;; esac
+  if $DRY_RUN; then dry "pip install --user uv poetry ruff"; else python3 -m pip install --user --upgrade uv poetry ruff 2>&1 | tail -3 || true; fi; ok python-tools; else skip python-tools; fi
+
+# node + js-tools
+if should_run node && ask node "node/nvm"; then section node "Node via nvm (+fallback)"
   export NVM_DIR="$HOME/.nvm"
-  if [ ! -d "$NVM_DIR" ]; then
-    if $DRY_RUN; then echo "[DRY] curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash"; else curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash 2>&1 | tail -10; fi
-  else
-    info "nvm already at $NVM_DIR"
-  fi
-  # Fallback system node only if nvm will not be used (phase 2 will handle nvm install)
-  if [ ! -s "$NVM_DIR/nvm.sh" ]; then
-    case "$PKG" in apt) install_pkg nodejs npm ;; pacman) install_pkg nodejs npm ;; dnf) install_pkg nodejs npm ;; brew) install_pkg node@24 ;; esac
-  fi
-fi
+  if [ ! -d "$NVM_DIR" ]; then if $DRY_RUN; then dry "curl nvm install"; else curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash 2>&1 | tail -3; fi; else info "nvm exists"; fi
+  if [ ! -s "$NVM_DIR/nvm.sh" ]; then case "$PKG" in apt) install_pkg nodejs npm;; pacman) install_pkg nodejs npm;; dnf) install_pkg nodejs npm;; brew) install_pkg node@24;; esac; fi
+  ok node; else skip node; fi
+if should_run js-tools && ask js-tools "js-tools"; then section js-tools "JS tools (yarn/pnpm/bun/deno)"
+  case "$PKG" in apt) install_pkg yarn || true;; pacman) install_pkg yarn pnpm bun deno || true;; dnf) install_pkg yarn || true;; brew) install_pkg yarn pnpm bun deno || true;; esac
+  if $DRY_RUN; then dry "npm i -g yarn pnpm"; else npm i -g yarn pnpm 2>&1 | tail -3 || true; fi; ok js-tools; else skip js-tools; fi
 
-### 6. JAVA 17-26 (install SDKMAN + JDKS) ###
-if should_run java; then
-  log "=== [PHASE1] JAVA 17-26 (install SDKMAN + JDKs) ==="
-  if [ ! -d "$HOME/.sdkman" ]; then
-    if $DRY_RUN; then echo "[DRY] curl -s https://get.sdkman.io | bash"; else curl -s "https://get.sdkman.io" | bash 2>&1 | tail -10; fi
-  else
-    info "SDKMAN already at $HOME/.sdkman"
-  fi
-  if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
-    # shellcheck source=/dev/null
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-  fi
-  for V in 17 18 19 20 21 22 23 24 25 26; do
-    TEM_ID="${V}-tem"
-    if command -v sdk >/dev/null 2>&1; then
-      if sdk list java 2>&1 | grep -q "${V}.*tem" || true; then
-        if $DRY_RUN; then echo "[DRY] sdk install java $TEM_ID"; else sdk install java "$TEM_ID" 2>&1 | tail -10 || warn "sdk install java $TEM_ID failed"; fi
-      else
-        warn "Java $V not in SDKMAN, trying apt/pacman"
-      fi
-    fi
-    case "$PKG" in
-      apt)
-        if [[ "$V" == "17" || "$V" == "21" ]]; then
-          if $DRY_RUN; then echo "[DRY] sudo apt install -y openjdk-${V}-jdk"; else sudo apt install -y "openjdk-${V}-jdk" 2>&1 | tail -10 || true; fi
-        fi
-        ;;
-      pacman)
-        case "$V" in 17) install_pkg jdk17-openjdk || true ;; 21) install_pkg jdk21-openjdk || true ;; *) if [ "$V" == "25" ] || [ "$V" == "26" ]; then install_pkg jdk-openjdk || true; fi ;; esac
-        ;;
-      dnf) install_pkg "java-${V}-openjdk-devel" 2>&1 | tail -5 || true ;;
-      brew) if $DRY_RUN; then echo "[DRY] brew install openjdk@${V}"; else brew install "openjdk@${V}" 2>&1 | tail -10 || true; fi ;;
-    esac
-  done
-fi
+# java + java-tools + kotlin
+if should_run java && ask java "java 17-26"; then section java "Java 17–26 (SDKMAN + native)"
+  if [ ! -d "$HOME/.sdkman" ]; then if $DRY_RUN; then dry "curl get.sdkman.io | bash"; else curl -s https://get.sdkman.io | bash 2>&1 | tail -3; fi; fi
+  [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
+  for V in 17 18 19 20 21 22 23 24 25 26; do TEM_ID="${V}-tem"
+    if command -v sdk >/dev/null 2>&1; then if $DRY_RUN; then dry "sdk install java $TEM_ID"; else sdk install java "$TEM_ID" 2>&1 | tail -3 || true; fi; fi
+    case "$PKG" in apt) [[ "$V" == 17 || "$V" == 21 ]] && { if $DRY_RUN; then dry "sudo apt install openjdk-$V-jdk"; else sudo apt install -y openjdk-${V}-jdk 2>&1 | tail -3 || true; fi; } ;;
+      pacman) case "$V" in 17) install_pkg jdk17-openjdk || true;; 21) install_pkg jdk21-openjdk || true;; 25|26) install_pkg jdk-openjdk || true;; esac ;;
+      dnf) install_pkg java-${V}-openjdk-devel 2>&1 | tail -2 || true ;;
+      brew) if $DRY_RUN; then dry "brew install openjdk@$V"; else brew install openjdk@${V} 2>&1 | tail -3 || true; fi ;; esac
+  done; ok java; else skip java; fi
+if should_run java-tools && ask java-tools "maven/gradle"; then section java-tools "Maven/Gradle"
+  case "$PKG" in apt) install_pkg maven gradle || true;; pacman) install_pkg maven gradle || true;; dnf) install_pkg maven gradle || true;; brew) install_pkg maven gradle || true;; esac
+  if command -v sdk >/dev/null 2>&1; then if $DRY_RUN; then dry "sdk install maven + gradle"; else sdk install maven 2>&1 | tail -2 || true; sdk install gradle 2>&1 | tail -2 || true; fi; fi; ok java-tools; else skip java-tools; fi
+if should_run kotlin && ask kotlin "kotlin"; then section kotlin "Kotlin"
+  case "$PKG" in apt) install_pkg kotlin || true;; pacman) install_pkg kotlin || true;; dnf) install_pkg kotlin || true;; brew) install_pkg kotlin || true;; esac
+  if command -v sdk >/dev/null 2>&1; then if $DRY_RUN; then dry "sdk install kotlin"; else sdk install kotlin 2>&1 | tail -2 || true; fi; fi; ok kotlin; else skip kotlin; fi
 
-### 7. NEOVIM ###
-if should_run neovim; then
-  log "=== [PHASE1] NEOVIM ==="
-  case "$PKG" in apt) install_pkg neovim ;; pacman) install_pkg neovim ;; dnf) install_pkg neovim ;; brew) install_pkg neovim ;; esac
-fi
+# go/rust/ruby/php/lua/zig/dart
+if should_run go && ask go "go"; then section go "Go"; case "$PKG" in apt) install_pkg golang-go || install_pkg golang || true;; pacman) install_pkg go || true;; dnf) install_pkg golang || true;; brew) install_pkg go || true;; esac; ok go; else skip go; fi
+if should_run rust && ask rust "rust"; then section rust "Rust (rustup)"
+  if $DRY_RUN; then dry "curl --proto https://sh.rustup.rs -sSf | sh -s -- -y + rustup component add rust-analyzer clippy rustfmt"
+  else curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y 2>&1 | tail -3 || true; source "$HOME/.cargo/env" 2>/dev/null || true; rustup component add rust-analyzer clippy rustfmt 2>&1 | tail -2 || true; fi
+  case "$PKG" in pacman) install_pkg rustup || true;; *) true;; esac; ok rust; else skip rust; fi
+if should_run ruby && ask ruby "ruby/php/lua"; then section ruby "Ruby/PHP/Lua"
+  case "$PKG" in apt) install_pkg ruby ruby-dev php php-cli lua5.4 || true;; pacman) install_pkg ruby php lua || true;; dnf) install_pkg ruby php lua || true;; brew) install_pkg ruby php lua || true;; esac; ok ruby; else skip ruby; fi
+if should_run php && ask php "php extra"; then section php "PHP composer"; if $DRY_RUN; then dry "php composer install"; else php --version 2>&1 | head -2 || true; fi; ok php; else skip php; fi
+if should_run lua && ask lua "lua extra"; then section lua "LuaRocks"; case "$PKG" in apt) install_pkg luarocks;; pacman) install_pkg luarocks;; dnf) install_pkg luarocks;; brew) install_pkg luarocks;; esac; ok lua; else skip lua; fi
+if should_run zig && ask zig "zig"; then section zig "Zig"; case "$PKG" in apt) install_pkg zig || true;; pacman) install_pkg zig || true;; dnf) install_pkg zig || true;; brew) install_pkg zig || true;; esac; ok zig; else skip zig; fi
+if should_run dart && ask dart "flutter"; then section dart "Flutter/Dart"
+  if [ ! -d "$HOME/flutter" ] && [ ! -d "$HOME/.flutter" ]; then if $DRY_RUN; then dry "git clone flutter stable ~/flutter"; else git clone https://github.com/flutter/flutter.git -b stable "$HOME/flutter" 2>&1 | tail -3; fi; else info "flutter exists"; fi
+  case "$PKG" in apt|pacman|brew) install_pkg dart 2>&1 | tail -2 || true;; esac; ok dart; else skip dart; fi
 
-### 8. GIT (install only) ###
-if should_run git; then
-  log "=== [PHASE1] GIT ==="
-  case "$PKG" in apt) install_pkg git git-lfs ;; pacman) install_pkg git git-lfs ;; dnf) install_pkg git git-lfs ;; brew) install_pkg git git-lfs ;; esac
-fi
+# git + github-cli
+if should_run git && ask git "git"; then section git "Git + LFS"
+  case "$PKG" in apt) install_pkg git git-lfs;; pacman) install_pkg git git-lfs;; dnf) install_pkg git git-lfs;; brew) install_pkg git git-lfs;; esac; ok git; else skip git; fi
+if should_run github-cli && ask github-cli "gh/lazygit"; then section github-cli "GitHub CLI + lazygit/delta"
+  case "$PKG" in apt) install_pkg gh lazygit git-delta || install_pkg gh || true;; pacman) install_pkg github-cli lazygit git-delta || true;; dnf) install_pkg gh lazygit git-delta || true;; brew) install_pkg gh lazygit git-delta || true;; esac; ok github-cli; else skip github-cli; fi
 
-### 9. SCRCPY (install package only) ###
-if should_run scrcpy; then
-  log "=== [PHASE1] SCRCPY (package) ==="
-  case "$PKG" in apt) install_pkg scrcpy adb || true ;; pacman) install_pkg scrcpy android-tools ;; dnf) install_pkg scrcpy android-tools ;; brew) install_pkg scrcpy android-platform-tools ;; esac
-fi
+# scrcpy
+if should_run scrcpy && ask scrcpy "scrcpy"; then section scrcpy "scrcpy + adb"
+  case "$PKG" in apt) install_pkg scrcpy adb || true;; pacman) install_pkg scrcpy android-tools;; dnf) install_pkg scrcpy android-tools;; brew) install_pkg scrcpy android-platform-tools;; esac; ok scrcpy; else skip scrcpy; fi
 
-### 10. DART / FLUTTER (install clone + dart pkg) ###
-if should_run dart; then
-  log "=== [PHASE1] DART / FLUTTER (clone + pkg) ==="
-  if [ ! -d "$HOME/flutter" ] && [ ! -d "$HOME/.flutter" ]; then
-    if $DRY_RUN; then echo "[DRY] git clone https://github.com/flutter/flutter.git -b stable ~/flutter"; else git clone https://github.com/flutter/flutter.git -b stable "$HOME/flutter" 2>&1 | tail -10; fi
-  else
-    info "flutter already cloned at $HOME/flutter"
-  fi
-  case "$PKG" in apt) install_pkg dart 2>&1 | tail -5 || true ;; pacman) install_pkg dart 2>&1 | tail -5 || true ;; brew) install_pkg dart 2>&1 | tail -5 || true ;; esac
-fi
-
-### 11. ANDROID ROM DEPS (install only) ###
-if should_run android-rom; then
-  log "=== [PHASE1] ANDROID ROM BUILD DEPS ==="
+# adb + fastboot drivers (PHASE 1 install only, udev/PATH in PHASE 2)
+if should_run adb && ask adb "adb platform-tools"; then section adb "ADB (platform-tools)"
   case "$PKG" in
-    apt)
-      install_pkg git-core gnupg flex bison build-essential zip curl \
-        zlib1g-dev libc6-dev-i386 libncurses5-dev lib32ncurses5-dev \
-        x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip \
-        libxml2-utils fontconfig squashfs-tools libssl-dev ccache libtinfo5 libncurses5 \
-        python3 python3-pip python-is-python3 rsync schedtool bc cpio liblz4-tool \
-        lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev \
-        libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool xsltproc zip gperf \
-        lib32stdc++6 libelf-dev libssl-dev m4 repo 2>&1 | tail -20 || true
-      if ! command -v repo >/dev/null 2>&1; then
-        if $DRY_RUN; then echo "[DRY] curl https://storage.googleapis.com/git-repo-downloads/repo -> ~/bin/repo"; else mkdir -p ~/bin; curl -fsSL https://storage.googleapis.com/git-repo-downloads/repo -o ~/bin/repo 2>&1 | tail -5; chmod a+x ~/bin/repo; fi
-      fi
-      ;;
-    pacman)
-      install_pkg base-devel git gnupg flex bison zip curl zlib lib32-zlib ncurses lib32-ncurses \
-        libx11 lib32-libx11 lib32-zlib glu mesa libxml2 xsltproc unzip squashfs-tools \
-        openssl ccache ncurses5-compat-libs python rsync schedtool bc cpio lz4 readline lib32-readline \
-        sdl wxgtk3 lib32-gcc-libs elfutils lib32-elfutils 2>&1 | tail -20 || true
-      if ! command -v repo >/dev/null 2>&1; then warn "Install repo from AUR: yay -S repo"; fi
-      ;;
-    dnf)
-      install_pkg git-core gnupg flex bison gcc gcc-c++ make zip curl zlib-devel glibc-devel.i686 ncurses-devel \
-        libX11-devel glibc-devel libxml2-utils xsltproc unzip squashfs-tools openssl ccache ncurses-compat-libs \
-        python3 rsync bc cpio lz4 2>&1 | tail -20 || true
-      ;;
-    brew)
-      install_pkg git gnupg flex bison zip curl zlib ncurses libx11 2>&1 | tail -20 || true
-      ;;
-  esac
-fi
-
-### 12. ANDROID KERNEL DEPS (install only) ###
-if should_run android-kernel; then
-  log "=== [PHASE1] ANDROID KERNEL BUILD DEPS ==="
+    apt) install_pkg adb android-tools-adb android-sdk-platform-tools-common || install_pkg adb || true ;;
+    pacman) install_pkg android-tools || true ;;
+    dnf) install_pkg android-tools || true ;;
+    brew) install_pkg android-platform-tools || true ;;
+  esac; ok adb; else skip adb; fi
+if should_run fastboot && ask fastboot "fastboot"; then section fastboot "Fastboot drivers"
   case "$PKG" in
-    apt)
-      install_pkg build-essential bc bison flex libssl-dev libelf-dev dwarves \
-        libncurses-dev libncurses5-dev libx32ncurses5-dev \
-        gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf \
-        binutils-aarch64-linux-gnu binutils-arm-linux-gnueabihf \
-        clang lld llvm gcc ccache \
-        python3 python3-dev libxml2-utils xsltproc cpio rsync kmod 2>&1 | tail -20 || true
-      ;;
-    pacman)
-      install_pkg base-devel bc bison flex openssl libelf dwarves ncurses \
-        aarch64-linux-gnu-gcc arm-none-eabi-gcc \
-        clang lld llvm ccache python cpio rsync kmod 2>&1 | tail -20 || true
-      ;;
-    dnf)
-      install_pkg bc bison flex openssl-devel elfutils-libelf-devel dwarves ncurses-devel \
-        gcc-aarch64-linux-gnu gcc-arm-linux-gnu clang lld llvm ccache python3 cpio rsync 2>&1 | tail -20 || true
-      ;;
-    brew)
-      install_pkg bc bison flex openssl libelf dwarves ncurses clang llvm ccache python cpio rsync 2>&1 | tail -20 || true
-      ;;
-  esac
-fi
-
-### 13. ANDROID SDK (install cmdline-tools only) ###
-if should_run sdk; then
-  log "=== [PHASE1] ANDROID SDK (install cmdline-tools) ==="
-  ANDROID_SDK_CANDIDATES=("$HOME/Android/Sdk" "$HOME/Android/sdk" "$HOME/Library/Android/sdk" "/opt/android-sdk" "/usr/local/android-sdk")
-  ANDROID_HOME_TMP=""
-  for cand in "${ANDROID_SDK_CANDIDATES[@]}"; do if [ -d "$cand" ]; then ANDROID_HOME_TMP="$cand"; break; fi; done
-  if [ -z "$ANDROID_HOME_TMP" ]; then
-    ANDROID_HOME_TMP="$HOME/Android/Sdk"
-    if ! $DRY_RUN; then mkdir -p "$ANDROID_HOME_TMP"; fi
-    if [ ! -d "$ANDROID_HOME_TMP/cmdline-tools" ]; then
-      CMDLINE_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
-      if [[ "$OS" == "macos" ]]; then CMDLINE_URL="https://dl.google.com/android/repository/commandlinetools-mac-11076708_latest.zip"; fi
-      if $DRY_RUN; then echo "[DRY] curl $CMDLINE_URL -> cmdline-tools.zip && unzip to $ANDROID_HOME_TMP"; else
-        mkdir -p /tmp/android-sdk; curl -fsSL "$CMDLINE_URL" -o /tmp/cmdline-tools.zip 2>&1 | tail -5
-        unzip -q /tmp/cmdline-tools.zip -d /tmp/android-sdk 2>&1 | tail -5
-        mkdir -p "$ANDROID_HOME_TMP/cmdline-tools"
-        mv /tmp/android-sdk/cmdline-tools "$ANDROID_HOME_TMP/cmdline-tools/latest" 2>&1 | tail -5 || true
-      fi
-    fi
-  else
-    info "SDK already at $ANDROID_HOME_TMP"
-  fi
-fi
-
-### 14. EXTRA TOOLS (install only) ###
-if should_run base || [ -z "$ONLY" ]; then
-  log "=== [PHASE1] EXTRA: htop, tree, jq, ripgrep, fd, bat ==="
+    apt) install_pkg fastboot android-tools-fastboot android-sdk-platform-tools-common || install_pkg fastboot || true ;;
+    pacman) install_pkg android-tools || true ;;
+    dnf) install_pkg android-tools || true ;;
+    brew) install_pkg android-platform-tools || true ;;
+  esac; ok fastboot; else skip fastboot; fi
+if should_run android-udev && ask android-udev "android udev rules"; then section android-udev "Android udev rules (51-android)"
   case "$PKG" in
-    apt) install_pkg htop tree jq ripgrep fd-find bat fzf tmux vim 2>&1 | tail -10 || true ;;
-    pacman) install_pkg htop tree jq ripgrep fd bat fzf tmux vim 2>&1 | tail -10 || true ;;
-    dnf) install_pkg htop tree jq ripgrep fd-find bat fzf tmux vim 2>&1 | tail -10 || true ;;
-    brew) install_pkg htop tree jq ripgrep fd bat fzf tmux vim 2>&1 | tail -10 || true ;;
+    apt) install_pkg android-sdk-platform-tools-common android-tools-udev || true ;;
+    pacman) install_pkg android-udev || true ;;
+    dnf) install_pkg android-tools-udev || true ;;
+    brew) true ;;
+  esac; ok android-udev; else skip android-udev; fi
+if should_run usb-tools && ask usb-tools "usb/mtp tools"; then section usb-tools "USB/MTP tools (lsusb/mtp)"
+  case "$PKG" in
+    apt) install_pkg usbutils mtp-tools libmtp-common libmtp-runtime gvfs-backends jmtpfs exfatprogs || install_pkg usbutils mtp-tools || true ;;
+    pacman) install_pkg usbutils mtp-tools libmtp gvfs-mtp jmtpfs exfatprogs || true ;;
+    dnf) install_pkg usbutils mtp-tools libmtp gvfs-mtp jmtpfs exfatprogs || true ;;
+    brew) install_pkg usbutils mtp-tools libmtp || true ;;
+  esac; ok usb-tools; else skip usb-tools; fi
+if should_run virt && ask virt "virtualization"; then section virt "Virtualization (qemu/virt-manager)"
+  case "$PKG" in
+    apt) install_pkg qemu-kvm qemu-utils virt-manager libvirt-daemon-system bridge-utils ovmf || install_pkg qemu virt-manager || true ;;
+    pacman) install_pkg qemu-full virt-manager libvirt edk2-ovmf bridge-utils || install_pkg qemu virt-manager || true ;;
+    dnf) install_pkg qemu-kvm qemu-img virt-manager libvirt edk2-ovmf || true ;;
+    brew) install_pkg qemu || true ;;
+  esac; ok virt; else skip virt; fi
+if should_run extra-media && ask extra-media "extra media apps"; then section extra-media "Extra media (obs/vlc/gimp/ink)"
+  case "$PKG" in
+    apt) install_pkg obs-studio vlc gimp inkscape kdenlive audacity || true ;;
+    pacman) install_pkg obs-studio vlc gimp inkscape kdenlive audacity || true ;;
+    dnf) install_pkg obs-studio vlc gimp inkscape kdenlive audacity || true ;;
+    brew) install_pkg --cask obs vlc gimp inkscape 2>/dev/null || brew install ffmpeg vlc || true ;;
+  esac; ok extra-media; else skip extra-media; fi
+if should_run extra-dev && ask extra-dev "extra dev tools"; then section extra-dev "Extra dev (yq/httpie/lazydocker/act)"
+  case "$PKG" in
+    apt) install_pkg yq httpie shellcheck shfmt direnv tokei hyperfine || true ;;
+    pacman) install_pkg yq httpie shellcheck shfmt direnv tokei hyperfine lazydocker act || true ;;
+    dnf) install_pkg yq httpie shellcheck direnv tokei hyperfine || true ;;
+    brew) install_pkg yq httpie shellcheck shfmt direnv tokei hyperfine lazydocker act || true ;;
   esac
-fi
+  if $DRY_RUN; then dry "npm i -g @githubnext/github-copilot-cli vercel wrangler firebase-tools"; else npm i -g vercel wrangler firebase-tools 2>&1 | tail -2 || true; fi
+  ok extra-dev; else skip extra-dev; fi
+if should_run fwupd && ask fwupd "firmware updater"; then section fwupd "Firmware (fwupd)"
+  case "$PKG" in
+    apt) install_pkg fwupd fwupd-signed || install_pkg fwupd || true ;;
+    pacman) install_pkg fwupd || true ;;
+    dnf) install_pkg fwupd || true ;;
+    brew) true ;;
+  esac; ok fwupd; else skip fwupd; fi
+
+# containers/k8s/db/media/net/docs/fonts/sysutils/security/ssh
+if should_run containers && ask containers "docker"; then section containers "Containers (docker/podman/buildx)"
+  case "$PKG" in apt) install_pkg docker.io docker-buildx podman podman-compose containerd || true;; pacman) install_pkg docker docker-buildx podman podman-compose || true;; dnf) install_pkg docker podman podman-compose || true;; brew) install_pkg docker podman || true;; esac; ok containers; else skip containers; fi
+if should_run k8s && ask k8s "k8s"; then section k8s "K8s (kubectl/helm/kind)"
+  case "$PKG" in apt) install_pkg kubectl helm kind minikube || true;; pacman) install_pkg kubectl helm kind minikube || true;; dnf) install_pkg kubectl helm || true;; brew) install_pkg kubectl helm kind minikube || true;; esac; ok k8s; else skip k8s; fi
+if should_run db && ask db "db clients"; then section db "DB clients (sqlite/pg/redis)"
+  case "$PKG" in apt) install_pkg sqlite3 postgresql-client redis-tools mysql-client || true;; pacman) install_pkg sqlite postgresql redis mysql-clients || true;; dnf) install_pkg sqlite postgresql redis mysql || true;; brew) install_pkg sqlite postgresql redis mysql-client || true;; esac; ok db; else skip db; fi
+if should_run media && ask media "ffmpeg"; then section media "Media (ffmpeg/magick)"
+  case "$PKG" in apt) install_pkg ffmpeg imagemagick mpv yt-dlp || true;; pacman) install_pkg ffmpeg imagemagick mpv yt-dlp || true;; dnf) install_pkg ffmpeg ImageMagick mpv yt-dlp || true;; brew) install_pkg ffmpeg imagemagick mpv yt-dlp || true;; esac; ok media; else skip media; fi
+if should_run net-tools && ask net-tools "net-tools"; then section net-tools "Net tools"
+  case "$PKG" in apt) install_pkg openssh-client net-tools dnsutils nmap socat aria2 httpie || true;; pacman) install_pkg openssh net-tools bind nmap socat aria2 httpie || true;; dnf) install_pkg openssh net-tools bind-utils nmap socat aria2 httpie || true;; brew) install_pkg openssh nmap socat aria2 httpie || true;; esac; ok net-tools; else skip net-tools; fi
+if should_run docs && ask docs "docs"; then section docs "Docs (pandoc/graphviz)"
+  case "$PKG" in apt) install_pkg pandoc graphviz texlive-latex-base || true;; pacman) install_pkg pandoc graphviz || true;; dnf) install_pkg pandoc graphviz || true;; brew) install_pkg pandoc graphviz || true;; esac; ok docs; else skip docs; fi
+if should_run fonts && ask fonts "fonts"; then section fonts "Nerd fonts"
+  case "$PKG" in apt) install_pkg fonts-jetbrains-mono fonts-firacode || true;; pacman) install_pkg ttf-jetbrains-mono-nerd ttf-firacode-nerd || true;; dnf) install_pkg jetbrains-mono-fonts || true;; brew) true;; esac; ok fonts; else skip fonts; fi
+if should_run sysutils && ask sysutils "sysutils"; then section sysutils "Sysutils (htop/jq/rg/fd/bat)"
+  case "$PKG" in apt) install_pkg htop tree jq ripgrep fd-find bat fzf tmux vim ncdu duf btop || true;; pacman) install_pkg htop tree jq ripgrep fd bat fzf tmux vim ncdu duf btop || true;; dnf) install_pkg htop tree jq ripgrep fd-find bat fzf tmux vim ncdu || true;; brew) install_pkg htop tree jq ripgrep fd bat fzf tmux vim ncdu duf btop || true;; esac; ok sysutils; else skip sysutils; fi
+if should_run security && ask security "security"; then section security "Security (gpg/age/sops)"
+  case "$PKG" in apt) install_pkg gnupg age sops pass || true;; pacman) install_pkg gnupg age sops pass || true;; dnf) install_pkg gnupg age sops pass || true;; brew) install_pkg gnupg age sops pass || true;; esac; ok security; else skip security; fi
+if should_run ssh && ask ssh "ssh server"; then section ssh "SSH"
+  case "$PKG" in apt) install_pkg openssh-client openssh-server mosh || true;; pacman) install_pkg openssh mosh || true;; dnf) install_pkg openssh mosh || true;; brew) install_pkg openssh mosh || true;; esac; ok ssh; else skip ssh; fi
+
+# android rom/kernel/sdk
+if should_run android-rom && ask android-rom "android-rom"; then section android-rom "Android ROM deps"
+  case "$PKG" in
+    apt) install_pkg git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 libncurses5-dev x11proto-core-dev libx11-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig squashfs-tools libssl-dev ccache python3 rsync schedtool bc cpio liblz4-tool lzop pngcrush gperf libelf-dev m4 repo 2>&1 | tail -5 || true
+      if ! command -v repo >/dev/null 2>&1; then if $DRY_RUN; then dry "curl repo -> ~/bin/repo"; else mkdir -p ~/bin; curl -fsSL https://storage.googleapis.com/git-repo-downloads/repo -o ~/bin/repo; chmod a+x ~/bin/repo; fi; fi ;;
+    pacman) install_pkg base-devel git gnupg flex bison zip curl zlib ncurses libx11 glu mesa libxml2 xsltproc unzip squashfs-tools openssl ccache python rsync bc cpio lz4 sdl elfutils 2>&1 | tail -5 || true; command -v repo >/dev/null 2>&1 || warn "yay -S repo" ;;
+    dnf) install_pkg git-core gnupg flex bison gcc gcc-c++ make zip curl zlib-devel ncurses-devel libX11-devel libxml2-utils xsltproc unzip squashfs-tools openssl ccache python3 rsync bc cpio lz4 2>&1 | tail -5 || true ;;
+    brew) install_pkg git gnupg flex bison zip curl zlib ncurses libx11 2>&1 | tail -3 || true ;;
+  esac; ok android-rom; else skip android-rom; fi
+if should_run android-kernel && ask android-kernel "android-kernel"; then section android-kernel "Android kernel deps"
+  case "$PKG" in
+    apt) install_pkg build-essential bc bison flex libssl-dev libelf-dev dwarves libncurses-dev gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf clang lld llvm ccache python3 cpio rsync kmod 2>&1 | tail -5 || true ;;
+    pacman) install_pkg base-devel bc bison flex openssl libelf dwarves ncurses aarch64-linux-gnu-gcc arm-none-eabi-gcc clang lld llvm ccache python cpio rsync 2>&1 | tail -5 || true ;;
+    dnf) install_pkg bc bison flex openssl-devel elfutils-libelf-devel dwarves ncurses-devel gcc-aarch64-linux-gnu clang lld llvm ccache python3 cpio 2>&1 | tail -5 || true ;;
+    brew) install_pkg bc bison flex openssl libelf dwarves ncurses clang llvm ccache python cpio 2>&1 | tail -3 || true ;;
+  esac; ok android-kernel; else skip android-kernel; fi
+if should_run sdk && ask sdk "android-sdk"; then section sdk "Android SDK cmdline-tools"
+  CANDS=("$HOME/Android/Sdk" "$HOME/Android/sdk" "$HOME/Library/Android/sdk" "/opt/android-sdk" "/usr/local/android-sdk"); SDK_TMP=""
+  for c in "${CANDS[@]}"; do [ -d "$c" ] && SDK_TMP="$c" && break; done
+  [ -z "$SDK_TMP" ] && SDK_TMP="$HOME/Android/Sdk"
+  if ! $DRY_RUN; then mkdir -p "$SDK_TMP"; fi
+  if [ ! -d "$SDK_TMP/cmdline-tools" ]; then URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"; [[ "$OS" == macos ]] && URL="https://dl.google.com/android/repository/commandlinetools-mac-11076708_latest.zip"
+    if $DRY_RUN; then dry "curl $URL → $SDK_TMP"; else mkdir -p /tmp/android-sdk; curl -fsSL "$URL" -o /tmp/cmdline-tools.zip 2>&1 | tail -2; unzip -q /tmp/cmdline-tools.zip -d /tmp/android-sdk; mkdir -p "$SDK_TMP/cmdline-tools"; mv /tmp/android-sdk/cmdline-tools "$SDK_TMP/cmdline-tools/latest" 2>&1 | tail -2 || true; fi; fi
+  ok sdk; else skip sdk; fi
 
 ##############################################################################
-# PHASE 2: TWEAKS, CONFIG, PATH (.zshrc/.bashrc, program tweaks)
+phase_hdr "PHASE 2 — TWEAKS, CONFIG & PATH (.zshrc/.bashrc)"
 ##############################################################################
-log "##############################################################################"
-log "# PHASE 2: TWEAKS, CONFIG & PATH (.zshrc/.bashrc, program tweaks)"
-log "##############################################################################"
-
-### 2.1 GIT TWEAK: defaultBranch main ###
-if should_run git || should_run base; then
-  log "=== [PHASE2] GIT TWEAK: init.defaultBranch=main ==="
-  if $DRY_RUN; then echo "[DRY] git config --global init.defaultBranch main"; else git config --global init.defaultBranch main 2>&1 | tail -5 || true; log "git init.defaultBranch = $(git config --global init.defaultBranch 2>&1)"; fi
-  if ! $DRY_RUN; then mkdir -p "$HOME/.config/git" 2>/dev/null || true; fi
-fi
-
-### 2.2 PYTHON TWEAK: pip upgrade + verify ###
-if should_run python; then
-  log "=== [PHASE2] PYTHON TWEAK ==="
-  if $DRY_RUN; then echo "[DRY] python3 -m pip install --user --upgrade pip && python3.11 --version"; else python3 -m pip install --user --upgrade pip 2>&1 | tail -5 || true; run "python3.11 --version 2>&1 | head -5 || python3 --version 2>&1 | head -5"; fi
-fi
-
-### 2.3 NODE TWEAK: nvm use 24.16 + PATH ###
-if should_run node; then
-  log "=== [PHASE2] NODE TWEAK: nvm 24.16 + PATH ==="
-  export NVM_DIR="$HOME/.nvm"
-  if [ -s "$NVM_DIR/nvm.sh" ]; then
-    # shellcheck source=/dev/null
-    . "$NVM_DIR/nvm.sh"
-    if $DRY_RUN; then echo "[DRY] nvm install 24.16.0 && nvm alias default 24.16.0 && nvm use 24.16.0"; else nvm install 24.16.0 2>&1 | tail -10; nvm alias default 24.16.0 2>&1 | tail -5; nvm use 24.16.0 2>&1 | tail -5; node --version; npm --version; fi
-    # Ensure nvm loader in .zshrc/.bashrc
-    for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
-      if [ -f "$RC" ] && ! grep -q "NVM_DIR" "$RC"; then
-        if $DRY_RUN; then echo "[DRY] Add NVM_DIR loader to $RC"; else
-          {
-            echo ""
-            echo '# NVM - added by cross-platform.sh (PHASE 2)'
-            echo 'export NVM_DIR="$HOME/.nvm"'
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
-          } >> "$RC"
-          log "Added NVM to $RC"
-        fi
-      fi
-    done
-  else
-    warn "nvm.sh not found, skipping nvm tweak"
-  fi
-fi
-
-### 2.4 JAVA TWEAK: verify + config ###
-if should_run java; then
-  log "=== [PHASE2] JAVA TWEAK: verify ==="
-  if $DRY_RUN; then echo "[DRY] java -version && sdk current java"; else java -version 2>&1 | head -5 || true; if command -v sdk >/dev/null 2>&1; then sdk current java 2>&1 | head -10 || true; fi; fi
-  # Ensure SDKMAN in .zshrc/.bashrc
-  for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
-    if [ -f "$RC" ] && [ -d "$HOME/.sdkman" ] && ! grep -q "sdkman-init.sh" "$RC"; then
-      if $DRY_RUN; then echo "[DRY] Add SDKMAN to $RC"; else
-        {
-          echo ""
-          echo '# SDKMAN - added by cross-platform.sh (PHASE 2)'
-          echo 'export SDKMAN_DIR="$HOME/.sdkman"'
-          echo '[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"'
-        } >> "$RC"
-        log "Added SDKMAN to $RC"
-      fi
-    fi
+add_rc() { # add_rc "MATCH" "LINE-or-BLOCK" file...
+  local match="$1"; shift; local content="$1"; shift
+  for RC in "$@"; do [ -f "$RC" ] || continue
+    if ! grep -qF "$match" "$RC" 2>/dev/null; then if $DRY_RUN; then dry "Add [$match] → $RC"; else printf "\n%s\n" "$content" >> "$RC"; log "PATH/tweak [$match] → $RC"; fi; else info "exists [$match] in $RC"; fi
   done
-fi
+}
 
-### 2.5 NEOVIM TWEAK (verify) ###
-if should_run neovim; then
-  log "=== [PHASE2] NEOVIM TWEAK ==="
-  if $DRY_RUN; then echo "[DRY] nvim --version"; else nvim --version 2>&1 | head -5 || true; fi
-fi
-
-### 2.6 SCRCPY TWEAK: config + PATH + pipewire ###
-if should_run scrcpy; then
-  log "=== [PHASE2] SCRCPY TWEAK: config + pipewire low-latency ==="
-  # scrcpy-fixed wrapper
-  if [ ! -f "$HOME/.local/bin/scrcpy-fixed" ]; then
-    if [ -f "$HOME/.local/opt/scrcpy-v4.1/scrcpy" ]; then
-      info "scrcpy-fixed already exists"
-    else
-      if $DRY_RUN; then echo "[DRY] create ~/.local/bin/scrcpy-fixed wrapper"; else
-        mkdir -p "$HOME/.local/bin"
-        cat > "$HOME/.local/bin/scrcpy-fixed" <<'EOF_INNER'
-#!/bin/bash
-# Fixed scrcpy for choppy audio (aac + 150ms) - PHASE 2 TWEAK
-exec scrcpy --audio-codec=aac --audio-bit-rate=128K --audio-buffer=150 --video-buffer=50 "$@"
-EOF_INNER
-        chmod +x "$HOME/.local/bin/scrcpy-fixed"
-        log "Created $HOME/.local/bin/scrcpy-fixed"
-      fi
-    fi
-  fi
-  # pipewire configs
+# git main
+if should_run git || should_run base; then echo -e "${BOLD}• git defaultBranch${NC}"; if $DRY_RUN; then dry "git config --global init.defaultBranch main"; else git config --global init.defaultBranch main || true; log "init.defaultBranch=$(git config --global init.defaultBranch)"; fi; fi
+# python
+if should_run python; then echo -e "${BOLD}• python pip${NC}"; if $DRY_RUN; then dry "pip upgrade + python3.11 --version"; else python3 -m pip install --user --upgrade pip 2>&1 | tail -2 || true; python3.11 --version 2>&1 | head -1 || python3 --version; fi; fi
+# node nvm
+if should_run node; then echo -e "${BOLD}• node 24.16${NC}"; export NVM_DIR="$HOME/.nvm"
+  if [ -s "$NVM_DIR/nvm.sh" ]; then source "$NVM_DIR/nvm.sh"; if $DRY_RUN; then dry "nvm install 24.16.0 && alias default"; else nvm install 24.16.0 2>&1 | tail -3; nvm alias default 24.16.0 2>&1 | tail -1; node --version; fi
+    add_rc "NVM_DIR" '# NVM (PHASE 2)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' "$HOME/.bashrc" "$HOME/.zshrc"; fi; fi
+# java sdkman
+if should_run java; then echo -e "${BOLD}• java verify${NC}"; if $DRY_RUN; then dry "java -version && sdk current java"; else java -version 2>&1 | head -2 || true; command -v sdk >/dev/null 2>&1 && sdk current java 2>&1 | head -3 || true; fi
+  [ -d "$HOME/.sdkman" ] && add_rc "sdkman-init.sh" '# SDKMAN (PHASE 2)
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"' "$HOME/.bashrc" "$HOME/.zshrc"; fi
+# rust cargo
+if should_run rust; then echo -e "${BOLD}• rust cargo PATH${NC}"; add_rc ".cargo/env" '# Rust (PHASE 2)
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"' "$HOME/.bashrc" "$HOME/.zshrc"; fi
+# go path
+if should_run go; then echo -e "${BOLD}• go PATH${NC}"; add_rc "go/bin" 'export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH" # Go (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"; fi
+# flutter
+if should_run dart; then echo -e "${BOLD}• flutter PATH${NC}"; add_rc "flutter/bin" 'export PATH="$HOME/flutter/bin:$PATH" # Flutter (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"
+  if $DRY_RUN; then dry "flutter --version"; else export PATH="$HOME/flutter/bin:$PATH"; flutter --version 2>&1 | head -3 || true; fi; fi
+# scrcpy
+if should_run scrcpy; then echo -e "${BOLD}• scrcpy-fixed + pipewire${NC}"
+  if [ ! -f "$HOME/.local/bin/scrcpy-fixed" ]; then if $DRY_RUN; then dry "create ~/.local/bin/scrcpy-fixed"; else mkdir -p "$HOME/.local/bin"; printf '#!/bin/bash\nexec scrcpy --audio-codec=aac --audio-bit-rate=128K --audio-buffer=150 --video-buffer=50 "$@"\n' > "$HOME/.local/bin/scrcpy-fixed"; chmod +x "$HOME/.local/bin/scrcpy-fixed"; fi; fi
   mkdir -p "$HOME/.config/pipewire/pipewire.conf.d" "$HOME/.config/wireplumber/wireplumber.conf.d"
-  if [ ! -f "$HOME/.config/pipewire/pipewire.conf.d/99-low-latency.conf" ]; then
-    if $DRY_RUN; then echo "[DRY] create ~/.config/pipewire/pipewire.conf.d/99-low-latency.conf (quantum 1024)"; else
-      cat > "$HOME/.config/pipewire/pipewire.conf.d/99-low-latency.conf" <<'EOF'
-context.properties = {
-    default.clock.quantum = 1024
-    default.clock.min-quantum = 256
-    default.clock.max-quantum = 2048
-    default.clock.rate = 48000
-}
-EOF
-      log "Created pipewire low-latency conf"
-    fi
+  [ -f "$HOME/.config/pipewire/pipewire.conf.d/99-low-latency.conf" ] || { if $DRY_RUN; then dry "pipewire quantum 1024"; else printf 'context.properties = {\n    default.clock.quantum = 1024\n    default.clock.min-quantum = 256\n    default.clock.max-quantum = 2048\n    default.clock.rate = 48000\n}\n' > "$HOME/.config/pipewire/pipewire.conf.d/99-low-latency.conf"; fi; }
+  [ -f "$HOME/.config/wireplumber/wireplumber.conf.d/99-no-suspend.conf" ] || { if $DRY_RUN; then dry "wireplumber no-suspend"; else printf 'monitor.alsa.rules = [ { matches = [{ node.name = "~alsa_.*"}] actions = { update-props = { session.suspend-timeout-seconds = 0 } } } ]\n' > "$HOME/.config/wireplumber/wireplumber.conf.d/99-no-suspend.conf"; fi; }
+  add_rc ".local/bin" 'export PATH="$HOME/.local/bin:$PATH" # local bin (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"
+  if ! $DRY_RUN; then systemctl --user restart pipewire pipewire-pulse wireplumber 2>&1 | tail -2 || true; fi; fi
+# android sdk PATH
+if should_run sdk; then echo -e "${BOLD}• android SDK PATH${NC}"; AH=""; for c in "$HOME/Android/Sdk" "$HOME/Android/sdk" "$HOME/Library/Android/sdk" "/opt/android-sdk"; do [ -d "$c" ] && AH="$c" && break; done; [ -z "$AH" ] && AH="$HOME/Android/Sdk"
+  log "ANDROID_HOME=$AH"
+  for RC in "$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.profile"; do [ -f "$RC" ] || continue
+    if ! grep -q "ANDROID_HOME" "$RC" 2>/dev/null; then if $DRY_RUN; then dry "Add ANDROID_HOME → $RC"; else printf '\n# Android SDK (PHASE 2)\nexport ANDROID_HOME="%s"\nexport ANDROID_SDK_ROOT="$ANDROID_HOME"\nexport PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"\n' "$AH" >> "$RC"; fi; else info "ANDROID_HOME exists in $RC"; fi; done
+  export ANDROID_HOME="$AH" ANDROID_SDK_ROOT="$AH"; export PATH="$AH/cmdline-tools/latest/bin:$AH/platform-tools:$AH/emulator:$PATH"
+  if $DRY_RUN; then dry "adb --version"; else adb --version 2>&1 | head -2 || warn "run sdkmanager --install platform-tools"; fi; fi
+# kernel ccache + ~/bin
+if should_run android-kernel; then echo -e "${BOLD}• ccache + ~/bin${NC}"; if $DRY_RUN; then dry "ccache --max-size=50G"; else mkdir -p ~/.ccache; ccache --max-size=50G 2>&1 | tail -1 || true; fi
+  add_rc "USE_CCACHE" 'export USE_CCACHE=1 # ccache (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"
+  add_rc '$HOME/bin' 'export PATH="$HOME/bin:$PATH" # ~/bin (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"; fi
+# fd/bat symlinks
+if should_run sysutils; then if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then if $DRY_RUN; then dry "ln fdfind→fd"; else sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd || true; fi; fi
+  if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then if $DRY_RUN; then dry "ln batcat→bat"; else sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat || true; fi; fi; fi
+# adb/fastboot + udev tweaks (PHASE 2: group, rules reload, verify — no installs)
+if should_run adb || should_run fastboot || should_run android-udev; then echo -e "${BOLD}• adb/fastboot drivers tweak${NC}"
+  if $DRY_RUN; then dry "sudo usermod -aG plugdev \$USER + udevadm reload + adb start-server + fastboot --version"
   else
-    info "pipewire low-latency conf exists"
-  fi
-  if [ ! -f "$HOME/.config/wireplumber/wireplumber.conf.d/99-no-suspend.conf" ]; then
-    if $DRY_RUN; then echo "[DRY] create ~/.config/wireplumber/wireplumber.conf.d/99-no-suspend.conf"; else
-      cat > "$HOME/.config/wireplumber/wireplumber.conf.d/99-no-suspend.conf" <<'EOF'
-monitor.alsa.rules = [
-  {
-    matches = [{ node.name = "~alsa_.*"}]
-    actions = { update-props = { session.suspend-timeout-seconds = 0 } }
-  }
-]
-EOF
-      log "Created wireplumber no-suspend conf"
-    fi
-  fi
-  # Ensure ~/.local/bin in PATH (.zshrc/.bashrc)
-  for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
-    if [ -f "$RC" ] && ! grep -q ".local/bin" "$RC"; then
-      if $DRY_RUN; then echo "[DRY] Add ~/.local/bin to PATH in $RC"; else echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$RC"; log "Added ~/.local/bin to $RC"; fi
-    fi
-  done
-  if ! $DRY_RUN; then systemctl --user restart pipewire pipewire-pulse wireplumber 2>&1 | tail -5 || true; fi
-fi
+    sudo groupadd -f plugdev 2>&1 | tail -1 || true
+    sudo usermod -aG plugdev "$USER" 2>&1 | tail -1 || true
+    if [ ! -f /etc/udev/rules.d/51-android.rules ]; then sudo sh -c 'curl -fsSL https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules -o /etc/udev/rules.d/51-android.rules 2>&1 | tail -2 || echo "# fallback android udev" > /etc/udev/rules.d/51-android.rules'; log "installed 51-android.rules"; else info "51-android.rules exists"; fi
+    sudo chmod 644 /etc/udev/rules.d/51-android.rules 2>&1 | tail -1 || true
+    sudo udevadm control --reload-rules 2>&1 | tail -1 || true; sudo udevadm trigger 2>&1 | tail -1 || true
+    adb start-server 2>&1 | tail -2 || true; adb --version 2>&1 | head -2 || true; fastboot --version 2>&1 | head -2 || fastboot --help 2>&1 | head -2 || true
+    log "plugdev groups: $(groups 2>&1 | tr '\n' ' ') — relogin needed for plugdev to apply"
+  fi; fi
+# usb-tools tweak: verify mtp/adb see devices
+if should_run usb-tools; then echo -e "${BOLD}• usb/mtp verify${NC}"; if $DRY_RUN; then dry "lsusb + mtp-detect --list-devices + adb devices"; else lsusb 2>&1 | head -10 || true; mtp-detect 2>&1 | head -5 || true; adb devices 2>&1 | head -10 || true; fi; fi
+# virt tweak: libvirt group + service
+if should_run virt; then echo -e "${BOLD}• virt tweak (libvirtd)${NC}"
+  if $DRY_RUN; then dry "sudo usermod -aG libvirt,kvm + systemctl enable libvirtd"
+  else sudo groupadd -f libvirt 2>&1 | tail -1 || true; sudo groupadd -f kvm 2>&1 | tail -1 || true; sudo usermod -aG libvirt,kvm "$USER" 2>&1 | tail -1 || true; sudo systemctl enable --now libvirtd 2>&1 | tail -2 || true; fi; fi
 
-### 2.7 DART/FLUTTER TWEAK: PATH ###
-if should_run dart; then
-  log "=== [PHASE2] DART/FLUTTER TWEAK: PATH (.zshrc/.bashrc) ==="
-  for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
-    if [ -f "$RC" ] && ! grep -q "flutter/bin" "$RC"; then
-      if $DRY_RUN; then echo "[DRY] echo 'export PATH=\$HOME/flutter/bin:\$PATH' >> $RC"; else echo 'export PATH="$HOME/flutter/bin:$PATH"' >> "$RC"; log "Added flutter to $RC"; fi
-    else
-      info "flutter PATH already in $RC"
-    fi
-  done
-  if $DRY_RUN; then echo "[DRY] flutter --version && dart --version"; else export PATH="$HOME/flutter/bin:$PATH"; flutter --version 2>&1 | head -10 || true; dart --version 2>&1 | head -5 || true; fi
-fi
-
-### 2.8 ANDROID SDK TWEAK: PATH (.zshrc/.bashrc) ###
-if should_run sdk; then
-  log "=== [PHASE2] ANDROID SDK TWEAK: PATH (.zshrc/.bashrc) ==="
-  ANDROID_SDK_CANDIDATES=("$HOME/Android/Sdk" "$HOME/Android/sdk" "$HOME/Library/Android/sdk" "/opt/android-sdk" "/usr/local/android-sdk")
-  ANDROID_HOME=""
-  for cand in "${ANDROID_SDK_CANDIDATES[@]}"; do if [ -d "$cand" ]; then ANDROID_HOME="$cand"; break; fi; done
-  if [ -z "$ANDROID_HOME" ]; then ANDROID_HOME="$HOME/Android/Sdk"; fi
-  log "ANDROID_HOME=$ANDROID_HOME"
-  for RC in "$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.profile" "$HOME/.config/fish/config.fish"; do
-    if [ -f "$RC" ] || [[ "$RC" == *".bashrc" ]] || [[ "$RC" == *".zshrc" ]]; then
-      mkdir -p "$(dirname "$RC")" 2>/dev/null || true
-      touch "$RC" 2>/dev/null || true
-      if ! grep -q "ANDROID_HOME" "$RC" 2>/dev/null; then
-        if $DRY_RUN; then echo "[DRY] Add ANDROID vars to $RC"; else
-          {
-            echo ""
-            echo "# Android SDK - added by cross-platform.sh (PHASE 2)"
-            echo "export ANDROID_HOME=\"$ANDROID_HOME\""
-            echo "export ANDROID_SDK_ROOT=\"\$ANDROID_HOME\""
-            echo 'export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"'
-          } >> "$RC"
-          log "Added Android SDK to $RC"
-        fi
-      else
-        info "Android SDK already in $RC"
-      fi
-    fi
-  done
-  export ANDROID_HOME="$ANDROID_HOME"
-  export ANDROID_SDK_ROOT="$ANDROID_HOME"
-  export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
-  if $DRY_RUN; then echo "[DRY] adb --version && sdkmanager --version"; else adb --version 2>&1 | head -5 || warn "adb not found, run sdkmanager --install platform-tools"; sdkmanager --version 2>&1 | head -5 || true; fi
-fi
-
-### 2.9 ANDROID KERNEL TWEAK: ccache + PATH ###
-if should_run android-kernel; then
-  log "=== [PHASE2] ANDROID KERNEL TWEAK: ccache ==="
-  if $DRY_RUN; then echo "[DRY] mkdir -p ~/.ccache && ccache --max-size=50G && add ~/bin to PATH"; else mkdir -p ~/.ccache; ccache --max-size=50G 2>&1 | tail -5 || true; fi
-  for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
-    if [ -f "$RC" ] && ! grep -q "ccache" "$RC"; then
-      if $DRY_RUN; then echo "[DRY] Add ccache to $RC"; else echo 'export USE_CCACHE=1' >> "$RC"; log "Added USE_CCACHE to $RC"; fi
-    fi
-  done
-  if [ ! -d "$HOME/bin" ]; then mkdir -p "$HOME/bin" 2>/dev/null || true; fi
-  for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
-    if [ -f "$RC" ] && ! grep -q "HOME/bin" "$RC"; then
-      if $DRY_RUN; then echo "[DRY] Add ~/bin to PATH in $RC"; else echo 'export PATH="$HOME/bin:$PATH"' >> "$RC"; log "Added ~/bin to $RC"; fi
-    fi
-  done
-fi
-
-### 2.10 EXTRA TWEAK: fd/bat symlinks ###
-if should_run base || [ -z "$ONLY" ]; then
-  log "=== [PHASE2] EXTRA TWEAK: fd/bat symlinks ==="
-  if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
-    if $DRY_RUN; then echo "[DRY] sudo ln -sf \$(command -v fdfind) /usr/local/bin/fd"; else sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd 2>&1 | tail -5 || true; fi
-  fi
-  if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
-    if $DRY_RUN; then echo "[DRY] sudo ln -sf \$(command -v batcat) /usr/local/bin/bat"; else sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat 2>&1 | tail -5 || true; fi
-  fi
-fi
-
-# Final
-log "##############################################################################"
-log "# DONE - PHASE 1 (INSTALL) + PHASE 2 (TWEAKS/PATH) COMPLETE"
-log "##############################################################################"
-info "OS: $OS | PKG: $PKG"
-info "Installed categories: ${ONLY:-all}"
-info "Verify:"
-info "  java -version; sdk current java; nvim --version; scrcpy --version; git --version; cmake --version; dart --version; flutter --version; node --version; python3.11 --version; clang --version; ninja --version; pkg-config --version"
-info "  echo \$ANDROID_HOME; adb --version; git config --global init.defaultBranch"
-info "  sysctl vm.swappiness; swapon --show; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-if $DRY_RUN; then warn "DRY RUN - no changes made"; fi
-log "If new PATH needed, run: source ~/.bashrc  or  source ~/.zshrc  or restart shell"
+# ── summary ─────────────────────────────────────────────────
+END_TS=$(date +%s); ELAPSED=$((END_TS-START_TS))
+phase_hdr "DONE — PHASE 1 + PHASE 2 COMPLETE (${ELAPSED}s)"
+echo -e "${BOLD}OS:${NC} $OS ($PKG)   ${BOLD}Profile:${NC} ${PROFILE:-custom}   ${BOLD}ONLY:${NC} ${ONLY:-all}   ${BOLD}SKIP:${NC} ${SKIP:-none}"
+echo -e "${GREEN}✔ passed (${#PASSED[@]}):${NC} ${PASSED[*]:-none}"
+[ ${#FAILED[@]} -gt 0 ] && echo -e "${RED}✘ failed (${#FAILED[@]}):${NC} ${FAILED[*]}"
+echo -e "${DIM}↷ skipped (${#SKIPPED[@]}):${NC} ${SKIPPED[*]:-none}"
+echo ""
+echo -e "${BOLD}Verify:${NC}"
+echo "  java -version; nvim --version; scrcpy --version; git config --global init.defaultBranch"
+echo "  node --version; python3.11 --version; go version; rustc --version; flutter --version"
+echo "  echo \$ANDROID_HOME; adb --version; adb devices; fastboot --version; lsusb | head"
+$DRY_RUN && warn "DRY RUN — no changes made"
+log "Reload shell: source ~/.bashrc  •  source ~/.zshrc"

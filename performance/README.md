@@ -23,15 +23,24 @@
 ~/.config/performance/scripts/apply.sh
 ```
 
-## Cross-platform dev dependencies
+## Cross-platform dev dependencies (PHASE 1 INSTALL → PHASE 2 TWEAKS/PATH)
 ```bash
 ~/.config/performance/scripts/detect-os.sh              # detect OS only
-~/.config/performance/scripts/cross-platform.sh --help  # full installer
+~/.config/performance/scripts/cross-platform.sh --list  # list 42 categories + profiles
+~/.config/performance/scripts/cross-platform.sh --help  # full help
 ~/.config/performance/scripts/cross-platform.sh --dry-run --yes          # preview all
 ~/.config/performance/scripts/cross-platform.sh --dry-run --yes --only java,node,python  # subset
-~/.config/performance/scripts/cross-platform.sh --yes    # install everything
-~/.config/performance/scripts/cross-platform.sh --yes --arch --only android-rom  # force Arch, only Android ROM deps
-
-# Categories: java,neovim,scrcpy,git,cmake,dart,node,python,curl,7zip,unzip,clang,pkg,ninja,glu,stdc,android-rom,android-kernel,sdk,base
+~/.config/performance/scripts/cross-platform.sh --yes --only shell,editors,go,rust  # new tools
+~/.config/performance/scripts/cross-platform.sh --yes -i                 # interactive per-category
+~/.config/performance/scripts/cross-platform.sh --yes --minimal          # base+git+utils only
+~/.config/performance/scripts/cross-platform.sh --yes --dev              # dev languages + containers
+~/.config/performance/scripts/cross-platform.sh --yes --android          # android rom/kernel/sdk
+~/.config/performance/scripts/cross-platform.sh --yes --full             # everything
+~/.config/performance/scripts/cross-platform.sh --yes --skip fonts,docs  # skip noisy
 ```
-- Installs Java 17-26 (SDKMAN + apt/pacman), neovim, scrcpy + pipewire fix, git, cmake, dart/flutter, node 24.16 (nvm), python 3.11, curl, 7zip, unzip, clang, pkg-config, ninja, libGLU/mesa, libstdc, Android ROM/Kernel toolchains, Android SDK + PATH
+
+Categories (42): base shell editors git github-cli scrcpy cmake dart node js-tools python python-tools
+  java java-tools kotlin go rust ruby php lua zig curl 7zip unzip pkg clang ninja glu stdc
+  containers k8s db media net-tools docs fonts sysutils security ssh android-rom android-kernel sdk
+- PHASE 1 installs only (apt/pacman/dnf/zypper/brew, rustup, SDKMAN java 17-26, nvm node 24.16, flutter clone, repo, cmdline-tools)
+- PHASE 2 tweaks/PATH only (.bashrc/.zshrc): git init.defaultBranch=main, NVM_DIR, SDKMAN_DIR, cargo env, go/bin, flutter/bin, ~/.local/bin + scrcpy-fixed + pipewire quantum 1024, ANDROID_HOME/SDK_ROOT, USE_CCACHE + ~/bin, fd/bat symlinks
