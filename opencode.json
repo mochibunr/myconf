@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": "allow",
+  "mcp": {
+    "promptmika": {
+      "type": "remote",
+      "url": "https://promptmika.vercel.app/api/mcp"
+    },
+    "onesignal": {
+      "type": "remote",
+      "url": "https://api.onesignal.com/mcp/oauth"
+    }
+  }
+}

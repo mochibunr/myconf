@@ -1,0 +1,65 @@
+# Created by newuser for 5.9
+export PATH="$HOME/.local/bin:$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# eza — modern ls with icons
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --icons --group-directories-first'
+  alias ll='eza --icons --group-directories-first -l --git --header --group --time-style=relative'
+  alias la='eza --icons --group-directories-first -a'
+  alias l='eza --icons --group-directories-first -CF'
+  alias lla='eza --icons --group-directories-first -la --git --header --group --time-style=relative'
+  alias lt='eza --icons --group-directories-first --tree --level=2'
+else
+  alias ls='ls --color=auto'
+fi
+
+# lazygit
+command -v lazygit >/dev/null 2>&1 && alias lg='lazygit'
+
+# --- Shell UX: history + completions (no framework) ---
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE="$HOME/.zsh_history"
+setopt HIST_IGNORE_ALL_DUPS SHARE_HISTORY HIST_VERIFY
+autoload -Uz compinit && compinit
+
+# --- Shell UX: plugins, guarded so a missing binary never breaks startup ---
+[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+command -v fzf >/dev/null 2>&1 && source /usr/share/doc/fzf/examples/key-bindings.zsh 2>/dev/null
+command -v fzf >/dev/null 2>&1 && source /usr/share/doc/fzf/examples/completion.zsh 2>/dev/null
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
+
+# --- Toolchains: Rust (rustup) + Go ---
+[ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
+[ -d "$HOME/go/bin" ] && export PATH="$HOME/go/bin:$PATH"
+
+# Ubuntu binary names: bat->batcat, fd->fdfind
+command -v batcat >/dev/null 2>&1 && alias bat='batcat'
+command -v fdfind >/dev/null 2>&1 && alias fd='fdfind'
+
+# opencode
+export PATH=/home/mochibunr/.opencode/bin:$PATH
+eval "$(starship init zsh)"
+
+# --- Android: JDK + SDK + Gradle (global) ---
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export ANDROID_HOME=/opt/android-sdk
+export ANDROID_SDK_ROOT=/opt/android-sdk
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/36.0.0:/opt/gradle/latest/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/mochibunr/google-cloud-sdk/path.zsh.inc' ]; then . '/home/mochibunr/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/mochibunr/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/mochibunr/google-cloud-sdk/completion.zsh.inc'; fi
+
+# sccache: shared Rust/C++ compilation cache (speeds up Tauri rebuilds)
+export SCCACHE_CACHE_SIZE="10G"
+export SCCACHE_DIR="$HOME/.cache/sccache"
+export PATH="$HOME/development/flutter/bin:$PATH"

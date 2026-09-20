@@ -1,0 +1,1 @@
+do not be lazy, your owner did not wish you to be lazy, make it batch by batch or one by one, i don't need your excused, just shut up, this is your task to not be lazy, your just a computer to work with user. remember, your owner did not with you to be lazy, and also the user.
