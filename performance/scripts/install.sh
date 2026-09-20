@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
-SRC="$HOME/.config/performance"
+# Support both direct and sudo invocation: use SUDO_USER's home if sudo
+if [ -n "$SUDO_USER" ] && [ "$SUDO_USER" != "root" ]; then
+  USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+else
+  USER_HOME="$HOME"
+fi
+SRC="$USER_HOME/.config/performance"
 ID=$(grep -E '^ID=' /etc/os-release 2>/dev/null | cut -d= -f2 | tr -d '"')
 ID_LIKE=$(grep -E '^ID_LIKE=' /etc/os-release 2>/dev/null | cut -d= -f2 | tr -d '"')
 FORCE="$1"
@@ -13,11 +19,12 @@ elif [[ "$ID" == "arch" ]] || [[ "$ID_LIKE" == *"arch"* ]]; then is_arch=true
 else is_debian=true; fi
 
 echo "Detected: ID=$ID ID_LIKE=$ID_LIKE -> arch=$is_arch debian=$is_debian"
+echo "SRC=$SRC"
 
 # sysctl (both)
 echo "-> Installing sysctl..."
 sudo install -Dm644 "$SRC/sysctl.d/99-performance.conf" /etc/sysctl.d/99-performance.conf
-sudo sysctl --system 2>&1 | head -20 || sudo sysctl -p /etc/sysctl.d/99-performance.conf
+sudo sysctl --system 2>&1 | head -30 || sudo sysctl -p /etc/sysctl.d/99-performance.conf 2>&1 | head -10
 
 # modprobe (both)
 echo "-> Installing modprobe..."
@@ -32,7 +39,6 @@ if $is_arch; then
   fi
   sudo install -Dm644 "$SRC/zram/zram-generator.conf" /etc/systemd/zram-generator.conf
   sudo systemctl daemon-reload
-  # disable zram-tools if present
   sudo systemctl disable --now zramswap.service 2>/dev/null || true
   sudo systemctl enable --now systemd-zram-setup@zram0.service 2>&1 | head -5 || true
 else
