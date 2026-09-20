@@ -1,0 +1,66 @@
+
+--- 2026-09-17T11:09:47.370Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-09-47_184.log"
+---
+
+--- 2026-09-17T11:09:47.370Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:09:47.388Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:09:47.404Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789643387404,"properties":{"amplitude_session_id":1789643387393,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"d1 list","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:09:47.417Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/d1/database
+---
+
+--- 2026-09-17T11:09:47.417Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:47.417Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:47.417Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:47.417Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:09:47.848Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:09:47.848Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:47.848Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:47.848Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:09:47.853Z log
+┌──────────────────────────────────────┬───────────┬──────────────────────────┬────────────┬────────────┬───────────┬──────────────┐
+│ uuid                                 │ name      │ created_at               │ version    │ num_tables │ file_size │ jurisdiction │
+├──────────────────────────────────────┼───────────┼──────────────────────────┼────────────┼────────────┼───────────┼──────────────┤
+│ eb890eda-7e09-4e46-b475-af0e57de65b9 │ fishly-db │ 2026-09-17T11:09:33.831Z │ production │ 0          │ 8192      │              │
+└──────────────────────────────────────┴───────────┴──────────────────────────┴────────────┴────────────┴───────────┴──────────────┘
+---
+
+--- 2026-09-17T11:09:47.853Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789643387853,"properties":{"amplitude_session_id":1789643387393,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"d1 list","sanitizedArgs":{},"durationMs":480,"currentAgentSkillsInstalled":false}}
+---

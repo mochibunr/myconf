@@ -1,0 +1,15 @@
+2026/09/19-09:20:48.673 4e76 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_mail.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/19-09:20:48.674 4e76 Recovering log #4
+2026/09/19-09:20:48.681 4e76 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_mail.google.com_0.indexeddb.leveldb/000004.log 
+2026/09/19-09:20:52.578 4e76 Level-0 table #8: started
+2026/09/19-09:20:52.598 4e76 Level-0 table #8: 3231961 bytes OK
+2026/09/19-09:20:52.602 4e76 Delete type=0 #4
+2026/09/19-09:20:54.061 4e75 Compacting 1@1 + 1@2 files
+2026/09/19-09:20:54.074 4e75 Generated table #9@1: 168 keys, 517038 bytes
+2026/09/19-09:20:54.075 4e75 Compacted 1@1 + 1@2 files => 517038 bytes
+2026/09/19-09:20:54.077 4e75 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/09/19-09:20:54.077 4e75 Delete type=2 #5
+2026/09/19-09:20:54.077 4e75 Delete type=2 #8
+2026/09/19-09:21:07.560 4e75 Level-0 table #11: started
+2026/09/19-09:21:07.584 4e75 Level-0 table #11: 3250449 bytes OK
+2026/09/19-09:21:07.587 4e75 Delete type=0 #7

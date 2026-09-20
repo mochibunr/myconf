@@ -1,0 +1,54 @@
+
+--- 2026-09-17T11:08:23.401Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-08-23_208.log"
+---
+
+--- 2026-09-17T11:08:23.401Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:08:23.410Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:08:23.427Z log
+Attempting to login via OAuth...
+---
+
+--- 2026-09-17T11:08:23.429Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789643303429,"properties":{"amplitude_session_id":1789643303416,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":true,"hasAssets":false,"agent":null,"argsUsed":[],"argsCombination":"","sanitizedCommand":"login","sanitizedArgs":{},"currentAgentSkillsInstalled":null}}
+---
+
+--- 2026-09-17T11:08:23.452Z log
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?response_type=code&client_id=54d11594-84e4-41aa-b438-e81b8fa78ee7&redirect_uri=http%3A%2F%2Flocalhost%3A8976%2Foauth%2Fcallback&scope=account%3Aread%20user%3Aread%20workers%3Awrite%20workers_kv%3Awrite%20workers_routes%3Awrite%20workers_scripts%3Awrite%20workers_tail%3Aread%20d1%3Awrite%20pages%3Awrite%20zone%3Aread%20ssl_certs%3Awrite%20ai%3Awrite%20ai-search%3Awrite%20ai-search%3Arun%20agent-memory%3Awrite%20queues%3Awrite%20pipelines%3Awrite%20secrets_store%3Awrite%20artifacts%3Awrite%20flagship%3Awrite%20containers%3Awrite%20cloudchamber%3Awrite%20connectivity%3Aadmin%20email_routing%3Awrite%20email_sending%3Awrite%20browser%3Awrite%20challenge-widgets.write%20offline_access&state=ZGVazQpN.wXOCAIFsq~Wq_k3RR-SZmim&code_challenge=dkRLIT_OuJuFLVoAN9enjvf0bLwWA6P-1H2SSxuwU9s&code_challenge_method=S256
+---
+
+--- 2026-09-17T11:08:39.686Z debug
+fetching auth token grant_type=authorization_code
+---
+
+--- 2026-09-17T11:08:39.687Z debug
+Checking if domain has Access enabled: dash.cloudflare.com
+---
+
+--- 2026-09-17T11:08:39.687Z debug
+Access switch not cached for: dash.cloudflare.com
+---
+
+--- 2026-09-17T11:08:40.687Z debug
+Fetching auth token from https://dash.cloudflare.com/oauth2/token
+---
+
+--- 2026-09-17T11:08:41.963Z log
+Successfully logged in.
+---
+
+--- 2026-09-17T11:08:41.965Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"login user","timestamp":1789643321965,"properties":{"amplitude_session_id":1789643321964,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":true,"hasAssets":false,"agent":null,"category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":null}}
+---
+
+--- 2026-09-17T11:08:41.966Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789643321966,"properties":{"amplitude_session_id":1789643303416,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":true,"hasAssets":false,"agent":null,"argsUsed":[],"argsCombination":"","sanitizedCommand":"login","sanitizedArgs":{},"durationMs":18561,"currentAgentSkillsInstalled":null}}
+---

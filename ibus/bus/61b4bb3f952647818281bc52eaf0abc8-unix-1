@@ -1,0 +1,7 @@
+# This file is created by ibus-daemon, please do not modify it.
+# This file allows processes on the machine to find the
+# ibus session bus with the below address.
+# If the IBUS_ADDRESS environment variable is set, it will
+# be used rather than this file.
+IBUS_ADDRESS=unix:path=/home/mochibunr/.cache/ibus/dbus-wKtHTi1V,guid=896604f873db7f5b9f644ee16aab00f1
+IBUS_DAEMON_PID=286908

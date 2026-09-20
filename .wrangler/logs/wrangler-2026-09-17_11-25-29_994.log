@@ -1,0 +1,120 @@
+
+--- 2026-09-17T11:25:30.186Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-25-29_994.log"
+---
+
+--- 2026-09-17T11:25:30.186Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:25:30.205Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:25:30.206Z log
+Resource location: remote 
+
+---
+
+--- 2026-09-17T11:25:30.222Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789644330222,"properties":{"amplitude_session_id":1789644330211,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"toml","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":["remote"],"argsCombination":"remote","sanitizedCommand":"d1 execute","sanitizedArgs":{"remote":true},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:25:30.234Z log
+🌀 Executing on remote database fishly-db (eb890eda-7e09-4e46-b475-af0e57de65b9):
+---
+
+--- 2026-09-17T11:25:30.234Z log
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+---
+
+--- 2026-09-17T11:25:30.236Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/d1/database/eb890eda-7e09-4e46-b475-af0e57de65b9/query
+---
+
+--- 2026-09-17T11:25:30.236Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:30.236Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:30.236Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:30.236Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:25:30.832Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:25:30.832Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:30.832Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:30.832Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:25:30.833Z log
+🚣 Executed 1 command in 0.68ms
+---
+
+--- 2026-09-17T11:25:30.833Z log
+[
+  {
+    "results": [
+      {
+        "name": "_cf_KV"
+      },
+      {
+        "name": "account"
+      },
+      {
+        "name": "fishly_library"
+      },
+      {
+        "name": "session"
+      },
+      {
+        "name": "user"
+      },
+      {
+        "name": "verification"
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "SIN",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.6785
+      },
+      "duration": 0.6785,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 61440,
+      "rows_read": 19,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]
+---
+
+--- 2026-09-17T11:25:30.834Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789644330834,"properties":{"amplitude_session_id":1789644330211,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"toml","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":["remote"],"argsCombination":"remote","sanitizedCommand":"d1 execute","sanitizedArgs":{"remote":true},"durationMs":644,"currentAgentSkillsInstalled":false}}
+---

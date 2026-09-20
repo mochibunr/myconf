@@ -1,0 +1,118 @@
+
+--- 2026-09-19T09:15:22.297Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-19_09-15-22_094.log"
+---
+
+--- 2026-09-19T09:15:22.297Z log
+
+ ⛅️ wrangler 4.133.0 (update available 4.135.0)
+───────────────────────────────────────────────
+---
+
+--- 2026-09-19T09:15:22.312Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789809322312,"properties":{"amplitude_session_id":1789809322299,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deployment list","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-19T09:15:22.328Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly/deployments
+---
+
+--- 2026-09-19T09:15:22.328Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T09:15:22.328Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T09:15:22.328Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T09:15:22.328Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T09:15:25.960Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T09:15:25.960Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T09:15:25.960Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T09:15:25.960Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T09:15:25.964Z debug
+Saving to cache: {"account_id":"5c2fd99f7afb057f14a31ef705ebbcc4"}
+---
+
+--- 2026-09-19T09:15:25.974Z log
+┌──────────────────────────────────────┬─────────────┬────────┬─────────┬───────────────────────────────────┬────────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Id                                   │ Environment │ Branch │ Source  │ Deployment                        │ Status         │ Build                                                                                                               │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ e413a8e6-af63-4d48-9ece-0317ddb6381a │ Production  │ main   │ 6003671 │ https://e413a8e6.fishly.pages.dev │ 1 minute ago   │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/e413a8e6-af63-4d48-9ece-0317ddb6381a │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 5ee375de-9a0c-4fa6-9d80-58285aac63bb │ Production  │ main   │ 6003671 │ https://5ee375de.fishly.pages.dev │ 11 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/5ee375de-9a0c-4fa6-9d80-58285aac63bb │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 9a384fcc-a120-44f6-9c86-46552254c12c │ Production  │ main   │ 6003671 │ https://9a384fcc.fishly.pages.dev │ 15 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/9a384fcc-a120-44f6-9c86-46552254c12c │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ d5e6681d-1fef-489e-971d-ac9ce5776853 │ Production  │ main   │ 6003671 │ https://d5e6681d.fishly.pages.dev │ 20 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/d5e6681d-1fef-489e-971d-ac9ce5776853 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 6d259304-885d-41ff-be06-02f97c2a4602 │ Production  │ main   │ 6003671 │ https://6d259304.fishly.pages.dev │ 24 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/6d259304-885d-41ff-be06-02f97c2a4602 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ a25922ce-bf14-4f29-ab6c-288e481e0e85 │ Production  │ main   │ 6003671 │ https://a25922ce.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/a25922ce-bf14-4f29-ab6c-288e481e0e85 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ ead1614d-f04c-4fe3-b538-7c4e4d542b28 │ Production  │ main   │ 6003671 │ https://ead1614d.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/ead1614d-f04c-4fe3-b538-7c4e4d542b28 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ cf747798-6c95-4a38-bfbf-6bd6250c8ca2 │ Production  │ main   │ 6003671 │ https://cf747798.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/cf747798-6c95-4a38-bfbf-6bd6250c8ca2 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ f38162cd-d0fe-471d-9016-7a6c64eaa843 │ Production  │ main   │ 6003671 │ https://f38162cd.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/f38162cd-d0fe-471d-9016-7a6c64eaa843 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 25cb8fca-e9a5-48b4-a03f-9598353bb3ba │ Production  │ main   │ 6003671 │ https://25cb8fca.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/25cb8fca-e9a5-48b4-a03f-9598353bb3ba │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 47aa24f9-2c82-4add-b665-ac6475936a4c │ Production  │ main   │ 6003671 │ https://47aa24f9.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/47aa24f9-2c82-4add-b665-ac6475936a4c │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ b82729bc-6fff-4d56-9e55-16bf5ed7df70 │ Production  │ main   │ 6003671 │ https://b82729bc.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/b82729bc-6fff-4d56-9e55-16bf5ed7df70 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 9e98a3fd-de69-449a-ab1d-69a1e7f3b600 │ Production  │ main   │ 6003671 │ https://9e98a3fd.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/9e98a3fd-de69-449a-ab1d-69a1e7f3b600 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ a153d9c7-957a-4d10-a78c-e7289b3302a1 │ Production  │ main   │ 6003671 │ https://a153d9c7.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/a153d9c7-957a-4d10-a78c-e7289b3302a1 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 07a6c655-ce39-4a95-8c90-9b3be34020ae │ Production  │ main   │ 6003671 │ https://07a6c655.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/07a6c655-ce39-4a95-8c90-9b3be34020ae │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ e43372fe-07b0-4179-a4db-624025f29c75 │ Production  │ main   │ 6003671 │ https://e43372fe.fishly.pages.dev │ 1 hour ago     │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/e43372fe-07b0-4179-a4db-624025f29c75 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ bcb2e04e-dace-4607-85d4-ae8fb1a8ac78 │ Production  │ main   │ 6003671 │ https://bcb2e04e.fishly.pages.dev │ 2 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/bcb2e04e-dace-4607-85d4-ae8fb1a8ac78 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ f2618db6-bfd7-44ec-a567-2e86feb28208 │ Production  │ main   │ 6003671 │ https://f2618db6.fishly.pages.dev │ 2 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/f2618db6-bfd7-44ec-a567-2e86feb28208 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ d6b1f55e-de77-4549-95cc-08d319eacaa1 │ Production  │ main   │ 6003671 │ https://d6b1f55e.fishly.pages.dev │ 2 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/d6b1f55e-de77-4549-95cc-08d319eacaa1 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ aed84d6d-939c-4226-a236-0b9b55bc56e6 │ Production  │ main   │ 6003671 │ https://aed84d6d.fishly.pages.dev │ 2 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/aed84d6d-939c-4226-a236-0b9b55bc56e6 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 99e01882-c273-4ee5-bd6d-85762b70964e │ Production  │ main   │ 6003671 │ https://99e01882.fishly.pages.dev │ 6 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/99e01882-c273-4ee5-bd6d-85762b70964e │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 5822f77f-f24f-49af-ad20-c0d3e53c50cb │ Production  │ main   │ 6003671 │ https://5822f77f.fishly.pages.dev │ 6 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/5822f77f-f24f-49af-ad20-c0d3e53c50cb │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 47c6d8ce-aaa6-4a7a-b086-1f39ff1b852e │ Production  │ main   │ 6003671 │ https://47c6d8ce.fishly.pages.dev │ 6 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/47c6d8ce-aaa6-4a7a-b086-1f39ff1b852e │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 0ae88cf9-d40f-4a8b-8bc9-1204308f15f9 │ Production  │ main   │ 6003671 │ https://0ae88cf9.fishly.pages.dev │ 6 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/0ae88cf9-d40f-4a8b-8bc9-1204308f15f9 │
+├──────────────────────────────────────┼─────────────┼────────┼─────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ b8787109-9f67-4692-9a4c-bcf2fe0070cc │ Production  │ main   │ 6003671 │ https://b8787109.fishly.pages.dev │ 6 hours ago    │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/b8787109-9f67-4692-9a4c-bcf2fe0070cc │
+└──────────────────────────────────────┴─────────────┴────────┴─────────┴───────────────────────────────────┴────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+---
+
+--- 2026-09-19T09:15:25.975Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"list pages deployments","timestamp":1789809325975,"properties":{"amplitude_session_id":1789809325975,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-19T09:15:25.976Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789809325976,"properties":{"amplitude_session_id":1789809322299,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deployment list","sanitizedArgs":{},"durationMs":3685,"currentAgentSkillsInstalled":false}}
+---

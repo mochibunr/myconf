@@ -1,0 +1,83 @@
+
+--- 2026-09-17T11:09:32.935Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-09-32_743.log"
+---
+
+--- 2026-09-17T11:09:32.935Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:09:32.944Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:09:32.963Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789643372963,"properties":{"amplitude_session_id":1789643372950,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"d1 create","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:09:32.977Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/d1/database
+---
+
+--- 2026-09-17T11:09:32.977Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:32.977Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:32.977Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:32.978Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:09:33.993Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:09:33.993Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:33.993Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:33.993Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:09:33.994Z log
+✅ Successfully created DB 'fishly-db' in region APAC
+---
+
+--- 2026-09-17T11:09:33.995Z log
+Created your new D1 database.
+
+---
+
+--- 2026-09-17T11:09:33.995Z log
+To access your new D1 Database in your Worker, add the following snippet to your configuration file:
+---
+
+--- 2026-09-17T11:09:33.995Z log
+{
+  "d1_databases": [
+    {
+      "binding": "fishly_db",
+      "database_name": "fishly-db",
+      "database_id": "eb890eda-7e09-4e46-b475-af0e57de65b9"
+    }
+  ]
+}
+---
+
+--- 2026-09-17T11:09:33.995Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789643373995,"properties":{"amplitude_session_id":1789643372950,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"d1 create","sanitizedArgs":{},"durationMs":1057,"currentAgentSkillsInstalled":false}}
+---

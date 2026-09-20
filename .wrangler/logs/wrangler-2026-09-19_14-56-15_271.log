@@ -1,0 +1,541 @@
+
+--- 2026-09-19T14:56:15.481Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-19_14-56-15_271.log"
+---
+
+--- 2026-09-19T14:56:15.481Z log
+
+ ⛅️ wrangler 4.133.0 (update available 4.135.0)
+───────────────────────────────────────────────
+---
+
+--- 2026-09-19T14:56:15.498Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789829775498,"properties":{"amplitude_session_id":1789829775483,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deploy","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-19T14:56:15.513Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly
+---
+
+--- 2026-09-19T14:56:15.514Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:15.514Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:15.514Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:15.514Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:16.809Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:16.809Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:16.810Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:16.810Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:16.812Z debug
+Pages-to-Workers delegation skipped: unsupported args: --commit-dirty
+---
+
+--- 2026-09-19T14:56:16.861Z warn
+▲ [WARNING] Pages now has wrangler.toml support.
+
+  We detected a configuration file at /home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/wrangler.toml but it is missing the "pages_build_output_dir" field, required by Pages.
+  If you would like to use this configuration file to deploy your project, please use "pages_build_output_dir" to specify the directory of static files to upload.
+  Ignoring configuration file for now, and proceeding with project deploy.
+
+
+---
+
+--- 2026-09-19T14:56:16.861Z debug
+pages deploy: Detecting git repository information...
+---
+
+--- 2026-09-19T14:56:16.869Z debug
+pages deploy: Git repository detected
+---
+
+--- 2026-09-19T14:56:16.879Z debug
+pages deploy: Working directory dirty status: true
+---
+
+--- 2026-09-19T14:56:16.886Z debug
+pages deploy: Detected branch: "main"
+---
+
+--- 2026-09-19T14:56:16.893Z debug
+pages deploy: Detected commit hash: "6003671b50be32541035680651b17894e1d41a4d"
+---
+
+--- 2026-09-19T14:56:16.900Z debug
+pages deploy: Detected commit message: "Second Commit"
+---
+
+--- 2026-09-19T14:56:16.900Z debug
+pages deploy: Git information summary - branch: main, commitHash: 6003671b50be32541035680651b17894e1d41a4d, commitDirty: true
+---
+
+--- 2026-09-19T14:56:16.901Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"delegate pages to workers","timestamp":1789829776901,"properties":{"amplitude_session_id":1789829776812,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","command":"deploy","result":"ineligible","reason":"unsupported_args","forceUsed":false,"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-19T14:56:16.903Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly
+---
+
+--- 2026-09-19T14:56:16.903Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:16.903Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:16.903Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:16.903Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:18.191Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:18.192Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:18.192Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:18.192Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:18.264Z log
+✨ Compiled Worker successfully
+---
+
+--- 2026-09-19T14:56:18.266Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly/upload-token
+---
+
+--- 2026-09-19T14:56:18.266Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:18.266Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:18.266Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:18.266Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:19.517Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:19.517Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:19.517Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:19.517Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:19.658Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly/upload-token
+---
+
+--- 2026-09-19T14:56:19.658Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:19.658Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:19.658Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:19.658Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:20.941Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:20.942Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:20.942Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:20.942Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:20.943Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/pages/assets/check-missing
+---
+
+--- 2026-09-19T14:56:20.943Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:20.943Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:20.943Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:20.943Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:21.365Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:21.365Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.365Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.365Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:21.366Z log
+Uploading... (18/36)
+---
+
+--- 2026-09-19T14:56:21.368Z debug
+POST /pages/assets/upload
+---
+
+--- 2026-09-19T14:56:21.369Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/pages/assets/upload
+---
+
+--- 2026-09-19T14:56:21.369Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.369Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.370Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.370Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:21.371Z debug
+POST /pages/assets/upload
+---
+
+--- 2026-09-19T14:56:21.372Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/pages/assets/upload
+---
+
+--- 2026-09-19T14:56:21.372Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.372Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.372Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.372Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:21.375Z debug
+POST /pages/assets/upload
+---
+
+--- 2026-09-19T14:56:21.376Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/pages/assets/upload
+---
+
+--- 2026-09-19T14:56:21.376Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.376Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.376Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:21.376Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:22.797Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+result: { successful_key_count: 6, unsuccessful_keys: [] }
+---
+
+--- 2026-09-19T14:56:22.798Z log
+Uploading... (24/36)
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:22.798Z debug
+result: { successful_key_count: 6, unsuccessful_keys: [] }
+---
+
+--- 2026-09-19T14:56:22.798Z log
+Uploading... (30/36)
+---
+
+--- 2026-09-19T14:56:22.960Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:22.960Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.960Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.960Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:22.960Z debug
+result: { successful_key_count: 6, unsuccessful_keys: [] }
+---
+
+--- 2026-09-19T14:56:22.960Z log
+Uploading... (36/36)
+---
+
+--- 2026-09-19T14:56:22.961Z log
+✨ Success! Uploaded 18 files (18 already uploaded) (2.02 sec)
+
+---
+
+--- 2026-09-19T14:56:22.961Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/pages/assets/upsert-hashes
+---
+
+--- 2026-09-19T14:56:22.961Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.961Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.961Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:22.961Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:23.324Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:23.324Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:23.324Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:23.324Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:23.325Z log
+✨ Uploading _redirects
+---
+
+--- 2026-09-19T14:56:23.329Z log
+✨ Uploading Functions bundle
+---
+
+--- 2026-09-19T14:56:23.330Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly/deployments
+---
+
+--- 2026-09-19T14:56:23.330Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:23.330Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:23.330Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:23.332Z debug
+BODY: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:23.332Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:26.006Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:26.006Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:26.006Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:26.006Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:26.007Z debug
+Saving to cache: {"account_id":"5c2fd99f7afb057f14a31ef705ebbcc4","project_name":"fishly"}
+---
+
+--- 2026-09-19T14:56:26.007Z log
+🌎 Deploying...
+---
+
+--- 2026-09-19T14:56:27.008Z debug
+attempt #1: Attempting to fetch status for deployment with id "23a0dd88-a3e5-4beb-b9b4-973e33fcf9eb" ...
+---
+
+--- 2026-09-19T14:56:27.008Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly/deployments/23a0dd88-a3e5-4beb-b9b4-973e33fcf9eb
+---
+
+--- 2026-09-19T14:56:27.008Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:27.009Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:27.009Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:27.009Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T14:56:28.426Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-19T14:56:28.426Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:28.426Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T14:56:28.426Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T14:56:28.427Z log
+✨ Deployment complete! Take a peek over at https://23a0dd88.fishly.pages.dev
+---
+
+--- 2026-09-19T14:56:28.427Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"create pages deployment","timestamp":1789829788427,"properties":{"amplitude_session_id":1789829788427,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-19T14:56:28.429Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789829788429,"properties":{"amplitude_session_id":1789829775483,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deploy","sanitizedArgs":{},"durationMs":12953,"currentAgentSkillsInstalled":false}}
+---

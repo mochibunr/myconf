@@ -1,0 +1,7 @@
+2026/09/13-22:23:16.431 66d1 Reusing MANIFEST /home/mochibunr/.config/Codex/Default/Partitions/codex-browser-app/IndexedDB/http_localhost_5183.indexeddb.leveldb/MANIFEST-000001
+2026/09/13-22:23:16.431 66d1 Recovering log #3
+2026/09/13-22:23:16.431 66d1 Reusing old log /home/mochibunr/.config/Codex/Default/Partitions/codex-browser-app/IndexedDB/http_localhost_5183.indexeddb.leveldb/000003.log 
+2026/09/14-03:17:45.410 66d3 Level-0 table #5: started
+2026/09/14-03:17:45.412 66d3 Level-0 table #5: 1395 bytes OK
+2026/09/14-03:17:45.414 66d3 Delete type=0 #3
+2026/09/14-03:17:45.414 66d3 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

@@ -1,0 +1,6 @@
+2026/09/17-18:54:01.133 5ebf4 Creating DB /home/mochibunr/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb since it was missing.
+2026/09/17-18:54:01.138 5ebf4 Reusing MANIFEST /home/mochibunr/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/17-18:55:03.100 5ebf5 Level-0 table #5: started
+2026/09/17-18:55:03.103 5ebf5 Level-0 table #5: 182136 bytes OK
+2026/09/17-18:55:03.105 5ebf5 Delete type=0 #3
+2026/09/17-18:55:03.105 5ebf5 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

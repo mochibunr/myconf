@@ -1,0 +1,86 @@
+CHANGELOG - Unaware in The City 2: Revisited
+
+v2026.06.01 (June 1st, 2026)
+
+GENERAL:
+
+A lot of changes, tweaks and fixes everywhere — only the notable ones (that I didn't forget to list) are listed below.
+
+BUG FIXES:
+
+Fixed many bugs & issues everywhere.
+Multiple Android fixes related to incompatible PC settings being used.
+Jane no longer follows Albert into Old Town and gets stuck there.
+Fixed Primary Needs (sleep/showering/peeing).
+
+MAJOR FEATURES:
+
+Added Albert Rent Mini-Game — Seduction (undressing) and Not Paying (undressing + touching).
+Added the Trespassing system — Jane can now break into locations.
+
+ART & ANIMATION:
+
+Updated character art & shaders.
+Updated background art in Home, Block & Diner (Wall & Ground tiles). Still WIP.
+Added or updated multiple animations.
+Added lights & shadows (Experimental).
+Added item & skill icons.
+
+CHARACTER CREATION:
+
+Added 2 sliders for quick height & width editing of the character's body.
+Each backstory now has different starting Health & Sanity, among other changes.
+Remade preset saving — players can now choose what gets saved/loaded.
+
+SKILLS, PERKS, TRAITS & BUFFS:
+
+Added Abilities.
+Added buff system with all kinds of functionality (stacking, refreshing, etc.).
+All Skills unified into 4 ranks; buffs allow scaling up to rank 6.
+Traits and Perks can now be filtered (search, dropdown, etc.).
+Simplified the perk cost formula to make it easier to understand.
+
+NPCs:
+
+Renamed 'NPCs' to 'people' (etc.) in many places across the game.
+NPCs can now follow Jane through the rooms.
+NPCs won't talk to Jane if their Hostility is too high.
+Updated NPC schedule system.
+
+MINI-GAMES:
+
+Expanded and improved the home masturbation mini-game (Bed only). Still WIP.
+Temporarily disabled toilet & shower masturbation while the anims are being remade.
+Some tweaks to the bubbles skill check mini-game.
+
+GAMEPLAY & SYSTEMS:
+
+Added a skippable introduction.
+Improved player movement with mouse & touchscreen.
+Multiple small details, e.g. Jane can get sick from overeating.
+Tutorials are no longer disabled by default; also added a few more.
+
+SAVING, LOADING & SETTINGS:
+
+All game settings are now saved and loaded on game start.
+Improved compatibility of the saving/loading feature — instead of breaking everything, it now tries to skip broken entries or revert to defaults.
+Save/Load window now displays a warning about incompatibility.
+After changing resolution, a 15-second pop-up asks whether to keep it before reverting automatically.
+
+MAIN MENU:
+
+Added News & Changelog sections.
+Updated the main menu and added a very simple background animation.
+Added social media buttons to the main menu.
+
+UI & HUD:
+
+Multiple improvements to UI & HUD.
+Multiple changes and fixes to quote, chat bubble and floating text systems.
+Clicking anywhere on screen with a mouse click now skips dialogues by default (can be changed).
+Multiple changes and tweaks to ordering food.
+Dialogue Window and some UI elements are now bigger on Android.
+
+v2026.04.30 (May 1st, 2026)
+
+Initial tech demo release.

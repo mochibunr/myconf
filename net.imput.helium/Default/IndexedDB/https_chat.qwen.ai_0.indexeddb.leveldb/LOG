@@ -1,0 +1,6 @@
+2026/09/13-18:21:24.709 989 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_chat.qwen.ai_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/13-18:21:24.709 989 Recovering log #13
+2026/09/13-18:21:24.709 989 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_chat.qwen.ai_0.indexeddb.leveldb/000013.log 
+2026/09/13-18:21:24.710 989 Delete type=2 #10
+2026/09/13-18:21:24.710 989 Delete type=2 #12
+2026/09/13-18:21:24.710 989 Delete type=2 #8

@@ -1,0 +1,77 @@
+
+--- 2026-09-17T11:09:45.096Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-09-44_909.log"
+---
+
+--- 2026-09-17T11:09:45.095Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:09:45.106Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:09:45.124Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789643385124,"properties":{"amplitude_session_id":1789643385111,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"d1 create","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:09:45.138Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/d1/database
+---
+
+--- 2026-09-17T11:09:45.138Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:45.138Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:45.139Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:45.139Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:09:46.545Z debug
+-- START CF API RESPONSE: Bad Request 400
+---
+
+--- 2026-09-17T11:09:46.545Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:46.545Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:46.545Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:09:46.547Z log
+
+---
+
+--- 2026-09-17T11:09:46.592Z error
+✘ [ERROR] A database with that name already exists
+
+
+---
+
+--- 2026-09-17T11:09:46.593Z debug
+Error: A database with that name already exists
+    at createD1Database (/home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:224374:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Object.handler (/home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:224459:20)
+    at async /home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:224084:26
+    at async Object.handler (/home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:224019:7)
+---
+
+--- 2026-09-17T11:09:46.593Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command errored","timestamp":1789643386593,"properties":{"amplitude_session_id":1789643385111,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"d1 create","sanitizedArgs":{},"durationMs":1447,"errorType":"UserError","errorMessage":"d1 create database already exists","currentAgentSkillsInstalled":false}}
+---

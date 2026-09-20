@@ -1,0 +1,72 @@
+
+--- 2026-09-19T00:08:55.251Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-19_00-08-55_055.log"
+---
+
+--- 2026-09-19T00:08:55.251Z log
+
+ ⛅️ wrangler 4.133.0 (update available 4.135.0)
+───────────────────────────────────────────────
+---
+
+--- 2026-09-19T00:08:55.265Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789776535265,"properties":{"amplitude_session_id":1789776535252,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"r2 bucket list","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-19T00:08:55.278Z log
+Listing buckets...
+---
+
+--- 2026-09-19T00:08:55.280Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/r2/buckets
+---
+
+--- 2026-09-19T00:08:55.280Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T00:08:55.280Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T00:08:55.280Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T00:08:55.280Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-19T00:08:55.720Z debug
+-- START CF API RESPONSE: Forbidden 403
+---
+
+--- 2026-09-19T00:08:55.720Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T00:08:55.720Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-19T00:08:55.720Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-19T00:08:55.722Z log
+
+---
+
+--- 2026-09-19T00:08:55.767Z error
+✘ [ERROR] A request to the Cloudflare API (/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/r2/buckets) failed.
+
+  Please enable R2 through the Cloudflare Dashboard. [code: 10042]
+  
+  If you think this is a bug, please open an issue at: https://github.com/cloudflare/workers-sdk/issues/new/choose
+
+
+---
+
+--- 2026-09-19T00:08:55.767Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command errored","timestamp":1789776535767,"properties":{"amplitude_session_id":1789776535252,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"r2 bucket list","sanitizedArgs":{},"durationMs":477,"errorType":"APIError","currentAgentSkillsInstalled":false}}
+---

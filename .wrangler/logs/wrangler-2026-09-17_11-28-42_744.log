@@ -1,0 +1,254 @@
+
+--- 2026-09-17T11:28:42.936Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-28-42_744.log"
+---
+
+--- 2026-09-17T11:28:42.936Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:28:42.957Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:28:42.973Z debug
+Compiling worker to "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.wrangler/tmp/pages-tQASRV/functionsWorker-0.5438964630312854.mjs"...
+---
+
+--- 2026-09-17T11:28:42.975Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789644522975,"properties":{"amplitude_session_id":1789644522958,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages dev","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:28:43.269Z log
+✨ Compiled Worker successfully
+---
+
+--- 2026-09-17T11:28:43.278Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"build pages functions","timestamp":1789644523278,"properties":{"amplitude_session_id":1789644523278,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:28:43.330Z debug
+setting config
+---
+
+--- 2026-09-17T11:28:43.331Z debug
+Updating config... undefined undefined
+---
+
+--- 2026-09-17T11:28:43.479Z log
+Using secrets defined in .dev.vars
+---
+
+--- 2026-09-17T11:28:43.481Z log
+Your Worker has access to the following bindings:
+---
+
+--- 2026-09-17T11:28:43.481Z log
+Binding                                                                   Resource                  Mode
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.fishly_db (local-fishly_db)                                           D1 Database               local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.CF_PAGES ("1")                                                        Environment Variable      local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.CF_PAGES_BRANCH ("local")                                             Environment Variable      local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.CF_PAGES_COMMIT_SHA ("0000000000000000000000000000000000000...")      Environment Variable      local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.CF_PAGES_URL ("https://00000000.fishly.pages.dev")                    Environment Variable      local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.BETTER_AUTH_URL ("https://fishly.pages.dev")                          Environment Variable      local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+env.BETTER_AUTH_SECRET ("(hidden)")                                       Environment Variable      local
+---
+
+--- 2026-09-17T11:28:43.481Z log
+
+---
+
+--- 2026-09-17T11:28:43.500Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"run pages dev","timestamp":1789644523500,"properties":{"amplitude_session_id":1789644523500,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:28:43.808Z debug
+RemoteRuntimeController teardown beginning...
+---
+
+--- 2026-09-17T11:28:43.808Z debug
+RemoteRuntimeController teardown complete
+---
+
+--- 2026-09-17T11:28:43.811Z log
+⎔ Starting local server...
+---
+
+--- 2026-09-17T11:28:43.819Z debug
+[InspectorProxyWorker] handleProxyControllerIncomingMessage {"type":"reloadStart"}
+---
+
+--- 2026-09-17T11:28:44.223Z debug
+[InspectorProxyWorker] handleProxyControllerIncomingMessage {"type":"reloadComplete","proxyData":{"userWorkerUrl":{"protocol":"http:","hostname":"127.0.0.1","port":"44041"},"userWorkerInspectorUrl":{"protocol":"ws:","hostname":"127.0.0.1","port":"44851","pathname":"/core:user:fishly"},"userWorkerInnerUrlOverrides":{"protocol":"http:"},"headers":{"MF-Proxy-Shared-Secret":"ddcac4ec-fcdb-431e-93f9-e5c941dde90b"},"liveReload":false,"proxyLogsToController":false}}
+---
+
+--- 2026-09-17T11:28:44.223Z debug
+[InspectorProxyWorker] reconnectRuntimeWebSocket
+---
+
+--- 2026-09-17T11:28:44.224Z debug
+[InspectorProxyWorker] NEW RUNTIME WEBSOCKET http://127.0.0.1:44851/core:user:fishly
+---
+
+--- 2026-09-17T11:28:44.224Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE { id: 100000001, result: {} }
+---
+
+--- 2026-09-17T11:28:44.225Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE {
+  method: 'Runtime.executionContextCreated',
+  params: {
+    context: {
+      id: 321394209,
+      origin: '',
+      name: 'Worker',
+      uniqueId: '1755829433285026591.441493099730715903'
+    }
+  }
+}
+---
+
+--- 2026-09-17T11:28:44.226Z debug
+[InspectorProxyWorker] SEND TO DEVTOOLS {"method":"Runtime.executionContextsCleared"}
+---
+
+--- 2026-09-17T11:28:44.227Z debug
+[InspectorProxyWorker] RUNTIME WEBSOCKET OPENED
+---
+
+--- 2026-09-17T11:28:44.227Z debug
+[InspectorProxyWorker] SEND TO RUNTIME {"method":"Runtime.enable","id":100000001}
+---
+
+--- 2026-09-17T11:28:54.227Z debug
+[InspectorProxyWorker] SEND TO RUNTIME {"method":"Runtime.getIsolateId","id":100000002}
+---
+
+--- 2026-09-17T11:28:54.228Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE { id: 100000002, result: { id: '7b07e7c7f299ca42' } }
+---
+
+--- 2026-09-17T11:29:04.230Z debug
+[InspectorProxyWorker] SEND TO RUNTIME {"method":"Runtime.getIsolateId","id":100000003}
+---
+
+--- 2026-09-17T11:29:04.231Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE { id: 100000003, result: { id: '7b07e7c7f299ca42' } }
+---
+
+--- 2026-09-17T11:29:13.101Z debug
+🌀 "change" event detected at functions/api/[[path]].js.
+---
+
+--- 2026-09-17T11:29:13.455Z log
+✨ Compiled Worker successfully
+---
+
+--- 2026-09-17T11:29:13.478Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"build pages functions","timestamp":1789644553478,"properties":{"amplitude_session_id":1789644553478,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:29:13.810Z debug
+RemoteRuntimeController teardown beginning...
+---
+
+--- 2026-09-17T11:29:13.810Z debug
+RemoteRuntimeController teardown complete
+---
+
+--- 2026-09-17T11:29:13.812Z log
+⎔ Reloading local server...
+---
+
+--- 2026-09-17T11:29:13.814Z debug
+[InspectorProxyWorker] handleProxyControllerIncomingMessage {"type":"reloadStart"}
+---
+
+--- 2026-09-17T11:29:13.815Z debug
+[InspectorProxyWorker] SEND TO RUNTIME {"method":"Runtime.discardConsoleEntries","id":100000004}
+---
+
+--- 2026-09-17T11:29:13.815Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE { id: 100000004, result: {} }
+---
+
+--- 2026-09-17T11:29:13.882Z debug
+[InspectorProxyWorker] RUNTIME WEBSOCKET CLOSED 1006 WebSocket disconnected without sending Close frame.
+---
+
+--- 2026-09-17T11:29:14.155Z log
+⎔ Local server updated and ready
+---
+
+--- 2026-09-17T11:29:14.157Z debug
+[InspectorProxyWorker] handleProxyControllerIncomingMessage {"type":"reloadComplete","proxyData":{"userWorkerUrl":{"protocol":"http:","hostname":"127.0.0.1","port":"36173"},"userWorkerInspectorUrl":{"protocol":"ws:","hostname":"127.0.0.1","port":"44851","pathname":"/core:user:fishly"},"userWorkerInnerUrlOverrides":{"protocol":"http:"},"headers":{"MF-Proxy-Shared-Secret":"ddcac4ec-fcdb-431e-93f9-e5c941dde90b"},"liveReload":false,"proxyLogsToController":false}}
+---
+
+--- 2026-09-17T11:29:14.157Z debug
+[InspectorProxyWorker] reconnectRuntimeWebSocket
+---
+
+--- 2026-09-17T11:29:14.158Z debug
+[InspectorProxyWorker] NEW RUNTIME WEBSOCKET http://127.0.0.1:44851/core:user:fishly
+---
+
+--- 2026-09-17T11:29:14.158Z debug
+[InspectorProxyWorker] SEND TO DEVTOOLS {"method":"Runtime.executionContextsCleared"}
+---
+
+--- 2026-09-17T11:29:14.159Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE {
+  method: 'Runtime.executionContextCreated',
+  params: {
+    context: {
+      id: 44765409,
+      origin: '',
+      name: 'Worker',
+      uniqueId: '-99519531618551612.-3192100600596908615'
+    }
+  }
+}
+---
+
+--- 2026-09-17T11:29:14.159Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE { id: 100000005, result: {} }
+---
+
+--- 2026-09-17T11:29:14.159Z debug
+[InspectorProxyWorker] RUNTIME WEBSOCKET OPENED
+---
+
+--- 2026-09-17T11:29:14.160Z debug
+[InspectorProxyWorker] SEND TO RUNTIME {"method":"Runtime.enable","id":100000005}
+---
+
+--- 2026-09-17T11:29:24.161Z debug
+[InspectorProxyWorker] SEND TO RUNTIME {"method":"Runtime.getIsolateId","id":100000006}
+---
+
+--- 2026-09-17T11:29:24.162Z debug
+[InspectorProxyWorker] RUNTIME INCOMING MESSAGE { id: 100000006, result: { id: 'e8bffe53e5a10049' } }
+---

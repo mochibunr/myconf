@@ -1,0 +1,27 @@
+2026/09/13-21:56:29.888 5 Reusing MANIFEST /home/mochibunr/.config/Codex/Default/Local Storage/leveldb/MANIFEST-000001
+2026/09/13-21:56:29.892 5 Recovering log #7
+2026/09/13-21:56:29.893 5 Reusing old log /home/mochibunr/.config/Codex/Default/Local Storage/leveldb/000007.log 
+2026/09/13-22:20:31.561 7 Level-0 table #11: started
+2026/09/13-22:20:31.564 7 Level-0 table #11: 11260 bytes OK
+2026/09/13-22:20:31.566 7 Delete type=0 #7
+2026/09/14-17:23:36.862 7 Level-0 table #13: started
+2026/09/14-17:23:36.865 7 Level-0 table #13: 9363 bytes OK
+2026/09/14-17:23:36.868 7 Delete type=0 #10
+2026/09/15-14:06:52.326 7 Level-0 table #15: started
+2026/09/15-14:06:52.329 7 Level-0 table #15: 9626 bytes OK
+2026/09/15-14:06:52.333 7 Delete type=0 #12
+2026/09/15-23:56:52.327 7 Level-0 table #17: started
+2026/09/15-23:56:52.330 7 Level-0 table #17: 12973 bytes OK
+2026/09/15-23:56:52.334 7 Delete type=0 #14
+2026/09/15-23:56:52.334 7 Compacting 4@0 + 1@1 files
+2026/09/15-23:56:52.338 7 Generated table #18@0: 5 keys, 2473 bytes
+2026/09/15-23:56:52.338 7 Compacted 4@0 + 1@1 files => 2473 bytes
+2026/09/15-23:56:52.342 7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/15-23:56:52.342 7 Delete type=2 #11
+2026/09/15-23:56:52.342 7 Delete type=2 #17
+2026/09/15-23:56:52.343 7 Delete type=2 #15
+2026/09/15-23:56:52.343 7 Delete type=2 #13
+2026/09/15-23:56:52.343 7 Delete type=2 #8
+2026/09/16-21:06:40.961 7 Level-0 table #20: started
+2026/09/16-21:06:40.964 7 Level-0 table #20: 9605 bytes OK
+2026/09/16-21:06:40.967 7 Delete type=0 #16

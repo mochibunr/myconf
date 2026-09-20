@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL": {
+      "workspaceId": "",
+      "appId": "app_3JUdVN8sqT1yeRSEngXJ0MW9MN4",
+      "appName": "Fishly",
+      "instances": {
+        "development": "ins_3JUdVLm5rtoQXdiKl13sXGr0MAo"
+      }
+    }
+  },
+  "telemetryNoticeShown": true,
+  "auth": {
+    "production": {
+      "userId": "user_3JUdNqLumyhGHKkrYGwzAHkgaX6"
+    }
+  },
+  "machineUuid": "ad46212e-c99c-4aa3-b606-ebe0d70379ab"
+}

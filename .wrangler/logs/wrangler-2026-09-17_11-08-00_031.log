@@ -1,0 +1,12 @@
+
+--- 2026-09-17T11:08:00.221Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-08-00_031.log"
+---
+
+--- 2026-09-17T11:08:00.221Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:08:00.223Z log
+4.133.0
+---

@@ -1,0 +1,12 @@
+2026/09/20-17:40:05.045 51fe8 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/20-17:40:05.045 51fe8 Recovering log #115
+2026/09/20-17:40:05.051 51fe8 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/000115.log 
+2026/09/20-17:40:10.790 51fea Level-0 table #120: started
+2026/09/20-17:40:10.803 51fea Level-0 table #120: 2078409 bytes OK
+2026/09/20-17:40:10.805 51fea Delete type=0 #115
+2026/09/20-17:40:13.383 5200d Compacting 1@1 + 1@2 files
+2026/09/20-17:40:13.390 5200d Generated table #121@1: 1207 keys, 173030 bytes
+2026/09/20-17:40:13.390 5200d Compacted 1@1 + 1@2 files => 173030 bytes
+2026/09/20-17:40:13.393 5200d compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/09/20-17:40:13.393 5200d Delete type=2 #117
+2026/09/20-17:40:13.393 5200d Delete type=2 #120

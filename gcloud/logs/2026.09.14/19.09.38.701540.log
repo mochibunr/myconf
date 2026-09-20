@@ -1,0 +1,111 @@
+2026-09-14 19:09:38,702 DEBUG    root            Loaded Command Group: ['gcloud', 'run']
+2026-09-14 19:09:39,644 DEBUG    root            Loaded Command Group: ['gcloud', 'run', 'deploy']
+2026-09-14 19:09:39,655 DEBUG    root            On GCE from disk cache: False
+2026-09-14 19:09:39,660 DEBUG    root            Running [gcloud.run.deploy] with arguments: [--source: ".", SERVICE: "echo-web"]
+2026-09-14 19:09:39,663 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:39,684 DEBUG    urllib3.connectionpool Starting new HTTPS connection (1): serviceusage.googleapis.com:443
+2026-09-14 19:09:41,281 DEBUG    urllib3.connectionpool https://serviceusage.googleapis.com:443 "GET /v1/projects/echosic/services/artifactregistry.googleapis.com?alt=json HTTP/1.1" 200 None
+2026-09-14 19:09:41,312 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:41,315 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:41,318 DEBUG    urllib3.connectionpool Starting new HTTPS connection (1): serviceusage.googleapis.com:443
+2026-09-14 19:09:42,754 DEBUG    urllib3.connectionpool https://serviceusage.googleapis.com:443 "GET /v1/projects/echosic/services/cloudbuild.googleapis.com?alt=json HTTP/1.1" 200 None
+2026-09-14 19:09:42,772 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:42,775 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:42,777 DEBUG    urllib3.connectionpool Starting new HTTPS connection (1): serviceusage.googleapis.com:443
+2026-09-14 19:09:44,264 DEBUG    urllib3.connectionpool https://serviceusage.googleapis.com:443 "GET /v1/projects/echosic/services/run.googleapis.com?alt=json HTTP/1.1" 200 None
+2026-09-14 19:09:44,292 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:48,358 INFO     ___FILE_ONLY___ Enabling APIs on project [echosic]...
+
+2026-09-14 19:09:48,359 DEBUG    root            On GCE from memory cache: False
+2026-09-14 19:09:48,361 DEBUG    urllib3.connectionpool Starting new HTTPS connection (1): serviceusage.googleapis.com:443
+2026-09-14 19:09:50,088 DEBUG    urllib3.connectionpool https://serviceusage.googleapis.com:443 "POST /v1/projects/echosic/services:batchEnable?alt=json HTTP/1.1" 400 None
+2026-09-14 19:09:50,090 DEBUG    root            Chosen display Format:default
+2026-09-14 19:09:50,102 DEBUG    root            Chosen display Format:default
+2026-09-14 19:09:50,103 DEBUG    root            Chosen display Format:default
+2026-09-14 19:09:50,104 DEBUG    root            (gcloud.run.deploy) FAILED_PRECONDITION: Billing account for project '795907537703' is not found. Billing must be enabled for activation of service(s) 'artifactregistry.googleapis.com,cloudbuild.googleapis.com,run.googleapis.com,containerregistry.googleapis.com' to proceed.
+Help Token: AbluAGs-H-GqMaN_h9gmHNgBVNi1kkITZO7wp1k9oR01nZ8ftthpEExKmTMSBGxe49YBY4oiMN-HMqo-c_tcSWt3OuHpdDvZXzWmPxwC2BO4d_NN
+- '@type': type.googleapis.com/google.rpc.PreconditionFailure
+  violations:
+  - subject: ?error_code=390001&project=795907537703&services=artifactregistry.googleapis.com&services=cloudbuild.googleapis.com&services=run.googleapis.com&services=containerregistry.googleapis.com
+    type: googleapis.com/billing-enabled
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: serviceusage.googleapis.com/billing-enabled
+  metadata:
+    project: '795907537703'
+    services: artifactregistry.googleapis.com,cloudbuild.googleapis.com,run.googleapis.com,containerregistry.googleapis.com
+  reason: UREQ_PROJECT_BILLING_NOT_FOUND
+Traceback (most recent call last):
+  File "/home/mochibunr/google-cloud-sdk/lib/googlecloudsdk/calliope/cli.py", line 951, in Execute
+    resources = calliope_command.Run(cli=self, args=args)
+  File "/home/mochibunr/google-cloud-sdk/lib/googlecloudsdk/calliope/backend.py", line 968, in Run
+    resources = command_instance.Run(args)
+  File "/home/mochibunr/google-cloud-sdk/lib/surface/run/deploy.py", line 931, in Run
+    skip_activation_prompt = api_enabler.check_and_enable_apis(
+        project_id, required_apis
+    )
+  File "/home/mochibunr/google-cloud-sdk/lib/googlecloudsdk/api_lib/run/api_enabler.py", line 117, in check_and_enable_apis
+    _batch_enable_apis(
+    ~~~~~~~~~~~~~~~~~~^
+        project_id, apis_not_enabled, message, prompt_string, print_op=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/mochibunr/google-cloud-sdk/lib/googlecloudsdk/api_lib/run/api_enabler.py", line 68, in _batch_enable_apis
+    op = serviceusage.BatchEnableApiCall(project_id, apis)
+  File "/home/mochibunr/google-cloud-sdk/lib/googlecloudsdk/api_lib/services/serviceusage.py", line 1335, in BatchEnableApiCall
+    return client.services.BatchEnable(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/mochibunr/google-cloud-sdk/lib/googlecloudsdk/generated_clients/apis/serviceusage/v1/serviceusage_v1_client.py", line 181, in BatchEnable
+    return self._RunMethod(
+           ~~~~~~~~~~~~~~~^
+        config, request, global_params=global_params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mochibunr/google-cloud-sdk/lib/third_party/apitools/base/py/base_api.py", line 747, in _RunMethod
+    return self.ProcessHttpResponse(method_config, http_response, request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mochibunr/google-cloud-sdk/lib/third_party/apitools/base/py/base_api.py", line 753, in ProcessHttpResponse
+    self.__ProcessHttpResponse(method_config, http_response, request))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mochibunr/google-cloud-sdk/lib/third_party/apitools/base/py/base_api.py", line 612, in __ProcessHttpResponse
+    raise exceptions.HttpError.FromResponse(
+        http_response, method_config=method_config, request=request)
+apitools.base.py.exceptions.HttpBadRequestError: HttpError accessing <https://serviceusage.googleapis.com/v1/projects/echosic/services:batchEnable?alt=json>: response: <{'vary': 'Origin, X-Origin, Referer', 'content-type': 'application/json; charset=UTF-8', 'content-encoding': 'gzip', 'date': 'Mon, 14 Sep 2026 12:09:49 GMT', 'server': 'ESF', 'x-xss-protection': '0', 'x-frame-options': 'SAMEORIGIN', 'x-content-type-options': 'nosniff', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000', 'transfer-encoding': 'chunked', 'status': 400}>, content <{
+  "error": {
+    "code": 400,
+    "message": "Billing account for project '795907537703' is not found. Billing must be enabled for activation of service(s) 'artifactregistry.googleapis.com,cloudbuild.googleapis.com,run.googleapis.com,containerregistry.googleapis.com' to proceed.\nHelp Token: AbluAGs-H-GqMaN_h9gmHNgBVNi1kkITZO7wp1k9oR01nZ8ftthpEExKmTMSBGxe49YBY4oiMN-HMqo-c_tcSWt3OuHpdDvZXzWmPxwC2BO4d_NN",
+    "status": "FAILED_PRECONDITION",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+        "violations": [
+          {
+            "type": "googleapis.com/billing-enabled",
+            "subject": "?error_code=390001&project=795907537703&services=artifactregistry.googleapis.com&services=cloudbuild.googleapis.com&services=run.googleapis.com&services=containerregistry.googleapis.com"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "UREQ_PROJECT_BILLING_NOT_FOUND",
+        "domain": "serviceusage.googleapis.com/billing-enabled",
+        "metadata": {
+          "project": "795907537703",
+          "services": "artifactregistry.googleapis.com,cloudbuild.googleapis.com,run.googleapis.com,containerregistry.googleapis.com"
+        }
+      }
+    ]
+  }
+}
+>
+2026-09-14 19:09:50,106 ERROR    root            (gcloud.run.deploy) FAILED_PRECONDITION: Billing account for project '795907537703' is not found. Billing must be enabled for activation of service(s) 'artifactregistry.googleapis.com,cloudbuild.googleapis.com,run.googleapis.com,containerregistry.googleapis.com' to proceed.
+Help Token: AbluAGs-H-GqMaN_h9gmHNgBVNi1kkITZO7wp1k9oR01nZ8ftthpEExKmTMSBGxe49YBY4oiMN-HMqo-c_tcSWt3OuHpdDvZXzWmPxwC2BO4d_NN
+- '@type': type.googleapis.com/google.rpc.PreconditionFailure
+  violations:
+  - subject: ?error_code=390001&project=795907537703&services=artifactregistry.googleapis.com&services=cloudbuild.googleapis.com&services=run.googleapis.com&services=containerregistry.googleapis.com
+    type: googleapis.com/billing-enabled
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: serviceusage.googleapis.com/billing-enabled
+  metadata:
+    project: '795907537703'
+    services: artifactregistry.googleapis.com,cloudbuild.googleapis.com,run.googleapis.com,containerregistry.googleapis.com
+  reason: UREQ_PROJECT_BILLING_NOT_FOUND

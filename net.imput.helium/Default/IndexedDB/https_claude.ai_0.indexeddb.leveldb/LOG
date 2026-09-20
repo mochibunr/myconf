@@ -1,0 +1,6 @@
+2026/09/11-07:07:46.428 1e0fd Creating DB /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb since it was missing.
+2026/09/11-07:07:46.432 1e0fd Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/11-07:46:30.389 1e0fe Level-0 table #5: started
+2026/09/11-07:46:30.390 1e0fe Level-0 table #5: 5886 bytes OK
+2026/09/11-07:46:30.392 1e0fe Delete type=0 #3
+2026/09/11-07:46:30.392 1e0fe Manual compaction at level-0 from (begin) .. (end); will stop at (end)

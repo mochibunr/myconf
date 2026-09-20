@@ -1,0 +1,82 @@
+
+--- 2026-09-17T11:59:41.537Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-59-41_329.log"
+---
+
+--- 2026-09-17T11:59:41.537Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:59:41.547Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:59:41.565Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789646381565,"properties":{"amplitude_session_id":1789646381548,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deployment list","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:59:41.580Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects/fishly/deployments
+---
+
+--- 2026-09-17T11:59:41.580Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:59:41.581Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:59:41.581Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:59:41.581Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:59:43.057Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:59:43.057Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:59:43.057Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:59:43.057Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:59:43.060Z debug
+Saving to cache: {"account_id":"5c2fd99f7afb057f14a31ef705ebbcc4"}
+---
+
+--- 2026-09-17T11:59:43.065Z log
+┌──────────────────────────────────────┬─────────────┬────────┬────────┬───────────────────────────────────┬────────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Id                                   │ Environment │ Branch │ Source │ Deployment                        │ Status         │ Build                                                                                                               │
+├──────────────────────────────────────┼─────────────┼────────┼────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 6e46c506-e40b-44fb-84ac-af60fc601d5c │ Production  │ main   │        │ https://6e46c506.fishly.pages.dev │ 3 minutes ago  │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/6e46c506-e40b-44fb-84ac-af60fc601d5c │
+├──────────────────────────────────────┼─────────────┼────────┼────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 24c42b16-613f-4477-bd6f-eba309389d5d │ Production  │ main   │        │ https://24c42b16.fishly.pages.dev │ 11 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/24c42b16-613f-4477-bd6f-eba309389d5d │
+├──────────────────────────────────────┼─────────────┼────────┼────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ ed158710-5392-47f9-990d-c4069b756554 │ Production  │ main   │        │ https://ed158710.fishly.pages.dev │ 16 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/ed158710-5392-47f9-990d-c4069b756554 │
+├──────────────────────────────────────┼─────────────┼────────┼────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ fdf95a82-67d1-4d3f-8491-67cad7e980ef │ Production  │ main   │        │ https://fdf95a82.fishly.pages.dev │ 18 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/fdf95a82-67d1-4d3f-8491-67cad7e980ef │
+├──────────────────────────────────────┼─────────────┼────────┼────────┼───────────────────────────────────┼────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ e01d46ce-8ba7-4a76-a647-0816a96d7c56 │ Production  │ main   │        │ https://e01d46ce.fishly.pages.dev │ 33 minutes ago │ https://dash.cloudflare.com/5c2fd99f7afb057f14a31ef705ebbcc4/pages/view/fishly/e01d46ce-8ba7-4a76-a647-0816a96d7c56 │
+└──────────────────────────────────────┴─────────────┴────────┴────────┴───────────────────────────────────┴────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+---
+
+--- 2026-09-17T11:59:43.066Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"list pages deployments","timestamp":1789646383066,"properties":{"amplitude_session_id":1789646383066,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:59:43.067Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789646383067,"properties":{"amplitude_session_id":1789646381548,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deployment list","sanitizedArgs":{},"durationMs":1526,"currentAgentSkillsInstalled":false}}
+---

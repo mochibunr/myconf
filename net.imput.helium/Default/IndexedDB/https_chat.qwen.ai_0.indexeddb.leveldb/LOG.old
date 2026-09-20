@@ -1,0 +1,22 @@
+2026/09/13-18:18:17.806 989 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_chat.qwen.ai_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/13-18:18:17.806 989 Recovering log #4
+2026/09/13-18:18:17.806 989 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_chat.qwen.ai_0.indexeddb.leveldb/000004.log 
+2026/09/13-18:18:20.281 98a Level-0 table #8: started
+2026/09/13-18:18:20.287 98a Level-0 table #8: 234012 bytes OK
+2026/09/13-18:18:20.291 98a Delete type=0 #4
+2026/09/13-18:18:20.410 98c Level-0 table #10: started
+2026/09/13-18:18:20.415 98c Level-0 table #10: 234212 bytes OK
+2026/09/13-18:18:20.419 98c Delete type=0 #7
+2026/09/13-18:18:20.548 98c Level-0 table #12: started
+2026/09/13-18:18:20.553 98c Level-0 table #12: 234547 bytes OK
+2026/09/13-18:18:20.557 98c Delete type=0 #9
+2026/09/13-18:18:20.654 989 Level-0 table #14: started
+2026/09/13-18:18:20.658 989 Level-0 table #14: 177572 bytes OK
+2026/09/13-18:18:20.660 989 Delete type=0 #11
+2026/09/13-18:18:20.661 989 Manual compaction at level-0 from '\x00\x02\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x03\x00\x00\x00' @ 0 : 0; will stop at '\x00\x02\x01\x02\x03\x00\x00\x00\x00\x00\x00,@' @ 3315 : 1
+2026/09/13-18:18:20.661 989 Compacting 3@0 + 1@1 files
+2026/09/13-18:18:20.677 989 Generated table #15@0: 1939 keys, 17194 bytes
+2026/09/13-18:18:20.677 989 Compacted 3@0 + 1@1 files => 17194 bytes
+2026/09/13-18:18:20.678 989 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/13-18:18:20.679 989 Delete type=2 #14
+2026/09/13-18:18:20.679 989 Manual compaction at level-0 from '\x00\x02\x01\x02\x03\x00\x00\x00\x00\x00\x00,@' @ 3315 : 1 .. '\x00\x03\x00\x00\x00' @ 0 : 0; will stop at (end)

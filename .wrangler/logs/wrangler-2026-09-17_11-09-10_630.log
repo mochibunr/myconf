@@ -1,0 +1,150 @@
+
+--- 2026-09-17T11:09:10.827Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-09-10_630.log"
+---
+
+--- 2026-09-17T11:09:10.827Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:09:10.836Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:09:10.850Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789643350850,"properties":{"amplitude_session_id":1789643350837,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages project list","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:09:10.863Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts
+---
+
+--- 2026-09-17T11:09:10.864Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:10.864Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:10.864Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:10.864Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:09:10.865Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/memberships
+---
+
+--- 2026-09-17T11:09:10.865Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:10.865Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:10.866Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:10.866Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:09:11.500Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:09:11.501Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:11.501Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:11.501Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:09:12.055Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:09:12.056Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:12.056Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:12.056Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:09:12.057Z debug
+Saving to cache: {"account":{"id":"5c2fd99f7afb057f14a31ef705ebbcc4","name":"Mochibunr@gmail.com's Account"}}
+---
+
+--- 2026-09-17T11:09:12.057Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/pages/projects
+---
+
+--- 2026-09-17T11:09:12.057Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:12.058Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:12.058Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:12.058Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:09:13.243Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:09:13.243Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:13.243Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:09:13.243Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:09:13.243Z debug
+Saving to cache: {"account_id":"5c2fd99f7afb057f14a31ef705ebbcc4"}
+---
+
+--- 2026-09-17T11:09:13.247Z log
+┌──────────────┬──────────────────┬──────────────┬───────────────┐
+│ Project Name │ Project Domains  │ Git Provider │ Last Modified │
+├──────────────┼──────────────────┼──────────────┼───────────────┤
+│ fishly       │ fishly.pages.dev │ No           │ 5 minutes ago │
+└──────────────┴──────────────────┴──────────────┴───────────────┘
+---
+
+--- 2026-09-17T11:09:13.248Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"list pages projects","timestamp":1789643353248,"properties":{"amplitude_session_id":1789643353247,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","category":"Workers","os":"linux:x64","currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:09:13.248Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789643353248,"properties":{"amplitude_session_id":1789643350837,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages project list","sanitizedArgs":{},"durationMs":2417,"currentAgentSkillsInstalled":false}}
+---

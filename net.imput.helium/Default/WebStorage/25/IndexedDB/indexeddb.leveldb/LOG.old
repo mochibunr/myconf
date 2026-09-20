@@ -1,0 +1,12 @@
+2026/09/20-17:35:20.031 51fea Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/WebStorage/25/IndexedDB/indexeddb.leveldb/MANIFEST-000001
+2026/09/20-17:35:20.031 51fea Recovering log #40
+2026/09/20-17:35:20.037 51fea Reusing old log /home/mochibunr/.config/net.imput.helium/Default/WebStorage/25/IndexedDB/indexeddb.leveldb/000040.log 
+2026/09/20-17:35:37.489 51fea Level-0 table #45: started
+2026/09/20-17:35:37.500 51fea Level-0 table #45: 1621916 bytes OK
+2026/09/20-17:35:37.504 51fea Delete type=0 #40
+2026/09/20-17:35:39.136 51fea Compacting 1@1 + 1@2 files
+2026/09/20-17:35:39.142 51fea Generated table #46@1: 632 keys, 27441 bytes
+2026/09/20-17:35:39.142 51fea Compacted 1@1 + 1@2 files => 27441 bytes
+2026/09/20-17:35:39.144 51fea compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/09/20-17:35:39.144 51fea Delete type=2 #42
+2026/09/20-17:35:39.144 51fea Delete type=2 #45

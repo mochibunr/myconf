@@ -1,0 +1,6 @@
+2026/09/18-15:42:55.941 724bf Creating DB /home/mochibunr/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/http_localhost_5173.indexeddb.leveldb since it was missing.
+2026/09/18-15:42:55.946 724bf Reusing MANIFEST /home/mochibunr/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/http_localhost_5173.indexeddb.leveldb/MANIFEST-000001
+2026/09/18-15:42:58.190 724be Level-0 table #5: started
+2026/09/18-15:42:58.191 724be Level-0 table #5: 1402 bytes OK
+2026/09/18-15:42:58.193 724be Delete type=0 #3
+2026/09/18-15:42:58.193 724be Manual compaction at level-0 from (begin) .. (end); will stop at (end)

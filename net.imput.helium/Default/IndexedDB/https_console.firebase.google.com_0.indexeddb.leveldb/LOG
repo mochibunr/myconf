@@ -1,0 +1,42 @@
+2026/09/14-19:11:09.130 17a6d Creating DB /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_console.firebase.google.com_0.indexeddb.leveldb since it was missing.
+2026/09/14-19:11:09.135 17a6d Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_console.firebase.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/09/14-19:11:09.179 17a6c Level-0 table #5: started
+2026/09/14-19:11:09.181 17a6c Level-0 table #5: 778 bytes OK
+2026/09/14-19:11:09.183 17a6c Delete type=0 #3
+2026/09/14-19:11:09.183 17a6c Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/09/14-19:11:49.386 17a6c Level-0 table #7: started
+2026/09/14-19:11:49.389 17a6c Level-0 table #7: 7220 bytes OK
+2026/09/14-19:11:49.391 17a6c Delete type=0 #4
+2026/09/14-19:11:49.391 17a6f Manual compaction at level-0 from '\x00\x04\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/09/14-19:17:41.358 17a6f Level-0 table #9: started
+2026/09/14-19:17:41.360 17a6f Level-0 table #9: 2077 bytes OK
+2026/09/14-19:17:41.362 17a6f Delete type=0 #6
+2026/09/14-19:17:41.362 17a6c Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at '\x00\x05\x00\x00\x05' @ 389 : 1
+2026/09/14-19:17:41.362 17a6c Compacting 1@0 + 1@1 files
+2026/09/14-19:17:41.364 17a6c Generated table #10@0: 153 keys, 2753 bytes
+2026/09/14-19:17:41.364 17a6c Compacted 1@0 + 1@1 files => 2753 bytes
+2026/09/14-19:17:41.366 17a6c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/14-19:17:41.366 17a6c Delete type=2 #9
+2026/09/14-19:17:41.366 17a6c Manual compaction at level-0 from '\x00\x05\x00\x00\x05' @ 389 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/09/14-19:17:41.703 17a6c Level-0 table #12: started
+2026/09/14-19:17:41.706 17a6c Level-0 table #12: 2079 bytes OK
+2026/09/14-19:17:41.708 17a6c Delete type=2 #7
+2026/09/14-19:17:41.708 17a6c Delete type=0 #8
+2026/09/14-19:17:41.708 17a6c Manual compaction at level-0 from '\x00\x06\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at '\x00\x06\x00\x00\x05' @ 432 : 1
+2026/09/14-19:17:41.708 17a6c Compacting 1@0 + 1@1 files
+2026/09/14-19:17:41.710 17a6c Generated table #13@0: 165 keys, 2860 bytes
+2026/09/14-19:17:41.710 17a6c Compacted 1@0 + 1@1 files => 2860 bytes
+2026/09/14-19:17:41.712 17a6c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/14-19:17:41.712 17a6c Delete type=2 #12
+2026/09/14-19:17:41.712 17a6c Manual compaction at level-0 from '\x00\x06\x00\x00\x05' @ 432 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/09/14-19:17:49.152 17a6f Level-0 table #15: started
+2026/09/14-19:17:49.154 17a6f Level-0 table #15: 2079 bytes OK
+2026/09/14-19:17:49.156 17a6f Delete type=0 #11
+2026/09/14-19:17:49.156 17a6f Delete type=2 #10
+2026/09/14-19:17:49.156 17a6d Manual compaction at level-0 from '\x00\x07\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x08\x00\x00\x00' @ 0 : 0; will stop at '\x00\x07\x00\x00\x05' @ 475 : 1
+2026/09/14-19:17:49.156 17a6d Compacting 1@0 + 1@1 files
+2026/09/14-19:17:49.158 17a6d Generated table #16@0: 177 keys, 3119 bytes
+2026/09/14-19:17:49.158 17a6d Compacted 1@0 + 1@1 files => 3119 bytes
+2026/09/14-19:17:49.161 17a6d compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/14-19:17:49.161 17a6d Delete type=2 #15
+2026/09/14-19:17:49.161 17a6d Manual compaction at level-0 from '\x00\x07\x00\x00\x05' @ 475 : 1 .. '\x00\x08\x00\x00\x00' @ 0 : 0; will stop at (end)

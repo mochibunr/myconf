@@ -1,0 +1,30 @@
+
+--- 2026-09-18T10:52:35.218Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-18_10-52-34_998.log"
+---
+
+--- 2026-09-18T10:52:35.218Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789728755218,"properties":{"amplitude_session_id":1789728755195,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deployment tail","sanitizedArgs":{},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-18T10:52:35.231Z log
+
+---
+
+--- 2026-09-18T10:52:35.275Z error
+✘ [ERROR] Missing deployment. In non-interactive mode, provide the deployment ID or URL as a positional argument.
+
+
+---
+
+--- 2026-09-18T10:52:35.276Z debug
+Error: Missing deployment. In non-interactive mode, provide the deployment ID or URL as a positional argument.
+    at Object.handler (/home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:296550:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async /home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:224084:26
+    at async Object.handler (/home/mochibunr/.nvm/versions/node/v24.16.0/lib/node_modules/wrangler/wrangler-dist/cli.js:224019:7)
+---
+
+--- 2026-09-18T10:52:35.276Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command errored","timestamp":1789728755276,"properties":{"amplitude_session_id":1789728755195,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":[],"argsCombination":"","sanitizedCommand":"pages deployment tail","sanitizedArgs":{},"durationMs":42,"errorType":"UserError","errorMessage":"pages deployment tail missing deployment","currentAgentSkillsInstalled":false}}
+---

@@ -1,0 +1,165 @@
+
+--- 2026-09-17T11:25:24.427Z debug
+🪵  Writing logs to "/home/mochibunr/.config/.wrangler/logs/wrangler-2026-09-17_11-25-24_238.log"
+---
+
+--- 2026-09-17T11:25:24.427Z debug
+.env file not found at "/home/mochibunr/Downloads/Echo-Desktop-3.0-FULL/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-09-17T11:25:24.438Z log
+
+ ⛅️ wrangler 4.133.0
+────────────────────
+---
+
+--- 2026-09-17T11:25:24.439Z log
+Resource location: remote 
+
+---
+
+--- 2026-09-17T11:25:24.456Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command started","timestamp":1789644324456,"properties":{"amplitude_session_id":1789644324444,"amplitude_event_id":0,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"toml","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":["remote"],"argsCombination":"remote","sanitizedCommand":"d1 execute","sanitizedArgs":{"remote":true},"currentAgentSkillsInstalled":false}}
+---
+
+--- 2026-09-17T11:25:24.520Z warn
+▲ [WARNING] ⚠️ This process may take some time, during which your D1 database will be unavailable to serve queries.
+
+
+---
+
+--- 2026-09-17T11:25:24.522Z log
+🌀 Executing on remote database fishly-db (eb890eda-7e09-4e46-b475-af0e57de65b9):
+---
+
+--- 2026-09-17T11:25:24.522Z log
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+---
+
+--- 2026-09-17T11:25:24.525Z log
+Note: if the execution fails to complete, your DB will return to its original state and you can safely retry.
+---
+
+--- 2026-09-17T11:25:24.526Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/d1/database/eb890eda-7e09-4e46-b475-af0e57de65b9/import
+---
+
+--- 2026-09-17T11:25:24.526Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:24.527Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:24.527Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:24.527Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:25:26.085Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:25:26.086Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:26.086Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:26.086Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:25:28.366Z debug
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/5c2fd99f7afb057f14a31ef705ebbcc4/d1/database/eb890eda-7e09-4e46-b475-af0e57de65b9/import
+---
+
+--- 2026-09-17T11:25:28.366Z debug
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:28.366Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:28.366Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:28.366Z debug
+-- END CF API REQUEST
+---
+
+--- 2026-09-17T11:25:29.320Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2026-09-17T11:25:29.320Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:29.320Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2026-09-17T11:25:29.320Z debug
+-- END CF API RESPONSE
+---
+
+--- 2026-09-17T11:25:29.321Z log
+🌀 Starting import...
+---
+
+--- 2026-09-17T11:25:29.321Z log
+🌀 Processed 5 queries.
+---
+
+--- 2026-09-17T11:25:29.321Z log
+🚣 Executed 5 queries in 6.60ms (5 rows read, 17 rows written)
+   Database is currently at bookmark 00000001-00000006-000050e9-9297bdc472653c13e4473f61fcf80a18.
+---
+
+--- 2026-09-17T11:25:29.321Z log
+[
+  {
+    "results": [
+      {
+        "Total queries executed": 5,
+        "Rows read": 5,
+        "Rows written": 17,
+        "Database size (MB)": "0.06"
+      }
+    ],
+    "success": true,
+    "finalBookmark": "00000001-00000006-000050e9-9297bdc472653c13e4473f61fcf80a18",
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "SIN",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 6.6029
+      },
+      "duration": 6.6029,
+      "changes": 1,
+      "last_row_id": 0,
+      "changed_db": true,
+      "size_after": 61440,
+      "rows_read": 5,
+      "rows_written": 17,
+      "num_tables": 5,
+      "total_attempts": 1
+    }
+  }
+]
+---
+
+--- 2026-09-17T11:25:29.321Z debug
+Metrics dispatcher: Posting data {"deviceId":"e7ee8e81-5836-4716-b81d-3a3c2fe20ecc","event":"wrangler command completed","timestamp":1789644329321,"properties":{"amplitude_session_id":1789644324444,"amplitude_event_id":1,"wranglerVersion":"4.133.0","wranglerMajorVersion":4,"wranglerMinorVersion":133,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2","nodeVersion":24,"isFirstUsage":false,"configFileType":"toml","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"opencode","argsUsed":["remote"],"argsCombination":"remote","sanitizedCommand":"d1 execute","sanitizedArgs":{"remote":true},"durationMs":4891,"currentAgentSkillsInstalled":false}}
+---

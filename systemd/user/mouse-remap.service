@@ -1,0 +1,12 @@
+[Unit]
+Description=Keep Lenovo mouse button 9 mapped to left click
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/mouse-remap-watch.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
