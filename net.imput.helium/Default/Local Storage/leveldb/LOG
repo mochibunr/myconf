@@ -1,6 +1,0 @@
-2026/09/20-19:56:51.994 5 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/Local Storage/leveldb/MANIFEST-000001
-2026/09/20-19:56:51.997 5 Recovering log #392
-2026/09/20-19:56:51.999 5 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/Local Storage/leveldb/000392.log 
-2026/09/20-20:03:55.644 7 Level-0 table #396: started
-2026/09/20-20:03:55.647 7 Level-0 table #396: 19634 bytes OK
-2026/09/20-20:03:55.650 7 Delete type=0 #392
