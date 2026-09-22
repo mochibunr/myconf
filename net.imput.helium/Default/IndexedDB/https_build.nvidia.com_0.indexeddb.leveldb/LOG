@@ -1,6 +1,0 @@
-2026/09/20-10:51:42.018 25430 Creating DB /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_build.nvidia.com_0.indexeddb.leveldb since it was missing.
-2026/09/20-10:51:42.021 25430 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_build.nvidia.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/09/20-14:53:17.787 25432 Level-0 table #5: started
-2026/09/20-14:53:17.789 25432 Level-0 table #5: 844 bytes OK
-2026/09/20-14:53:17.792 25432 Delete type=0 #3
-2026/09/20-14:53:17.792 25432 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

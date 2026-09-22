@@ -97,20 +97,21 @@ Categories:
   ruby php lua zig kotlin github-cli db containers k8s media net-tools
   docs fonts sysutils security ssh android-rom android-kernel sdk
   adb fastboot android-udev usb-tools virt extra-media extra-dev fwupd
+  kitty librewolf starship fastfetch
 EOF
       exit 0 ;;
     *) shift ;;
   esac
 done
 
-CATEGORIES="base shell editors git scrcpy cmake dart node python java java-tools curl 7zip unzip pkg clang ninja glu stdc go rust js-tools python-tools ruby php lua zig kotlin github-cli db containers k8s media net-tools docs fonts sysutils security ssh android-rom android-kernel sdk adb fastboot android-udev usb-tools virt extra-media extra-dev fwupd"
+CATEGORIES="base shell editors git scrcpy cmake dart node python java java-tools curl 7zip unzip pkg clang ninja glu stdc go rust js-tools python-tools ruby php lua zig kotlin github-cli db containers k8s media net-tools docs fonts sysutils security ssh android-rom android-kernel sdk adb fastboot android-udev usb-tools virt extra-media extra-dev fwupd kitty librewolf starship fastfetch"
 if $LIST_ONLY; then echo "Categories:"; for c in $CATEGORIES; do echo "  - $c"; done; echo ""; echo "Profiles: minimal dev android full"; exit 0; fi
 
 # profiles expand to ONLY/SKIP
 case "$PROFILE" in
-  minimal) ONLY="base,git,curl,unzip,7zip,sysutils,ssh,adb,usb-tools" ;;
-  dev) ONLY="base,shell,editors,git,github-cli,cmake,ninja,pkg,clang,stdc,python,python-tools,node,js-tools,go,rust,java,java-tools,containers,db,media,net-tools,docs,sysutils,security,ssh,adb,usb-tools,extra-dev,fwupd" ;;
-  android) ONLY="base,git,java,python,cmake,ninja,clang,stdc,sdk,android-rom,android-kernel,scrcpy,sysutils,adb,fastboot,android-udev,usb-tools" ;;
+  minimal) ONLY="base,git,curl,unzip,7zip,sysutils,ssh,adb,usb-tools,fastfetch,starship,kitty" ;;
+  dev) ONLY="base,shell,editors,git,github-cli,cmake,ninja,pkg,clang,stdc,python,python-tools,node,js-tools,go,rust,java,java-tools,containers,db,media,net-tools,docs,sysutils,security,ssh,adb,usb-tools,extra-dev,fwupd,fastfetch,starship,kitty" ;;
+  android) ONLY="base,git,java,python,cmake,ninja,clang,stdc,sdk,android-rom,android-kernel,scrcpy,sysutils,adb,fastboot,android-udev,usb-tools,fastfetch" ;;
   full) ONLY="" ;;
 esac
 
@@ -146,15 +147,38 @@ ask() { # ask "cat" "prompt" -> 0 run, 1 skip
 }
 run() { if $DRY_RUN; then dry "$*"; else eval "$@"; fi; }
 
+# detect if a system package is already installed (no re-download)
+have_pkg() { # have_pkg <name> -> 0 if installed
+  local p="$1"
+  case "$PKG" in
+    apt) dpkg -s "$p" >/dev/null 2>&1 ;;
+    pacman) pacman -Qi "$p" >/dev/null 2>&1 ;;
+    dnf) rpm -q "$p" >/dev/null 2>&1 ;;
+    zypper) rpm -q "$p" >/dev/null 2>&1 ;;
+    brew) brew list "$p" >/dev/null 2>&1 ;;
+    *) return 1 ;;
+  esac
+}
+# detect if a binary exists in PATH (curl installs / manual builds)
+have_cmd() { command -v "$1" >/dev/null 2>&1; }
+
 install_pkg() {
   local pkgs=("$@"); [ ${#pkgs[@]} -eq 0 ] && return 0
+  local missing=() skipped=() p
+  for p in "${pkgs[@]}"; do
+    if $DRY_RUN; then missing+=("$p")
+    elif have_pkg "$p"; then skipped+=("$p")
+    else missing+=("$p"); fi
+  done
+  if [ ${#skipped[@]} -gt 0 ]; then info "already installed, skip: ${skipped[*]}"; fi
+  [ ${#missing[@]} -eq 0 ] && return 0
   case "$PKG" in
-    apt) if $DRY_RUN; then dry "sudo apt install -y ${pkgs[*]}"; else sudo apt update -qq 2>&1 | tail -3; sudo apt install -y "${pkgs[@]}" 2>&1 | tail -8; fi ;;
-    pacman) if $DRY_RUN; then dry "sudo pacman -S --noconfirm ${pkgs[*]}"; else sudo pacman -S --noconfirm "${pkgs[@]}" 2>&1 | tail -8; fi ;;
-    dnf) if $DRY_RUN; then dry "sudo dnf install -y ${pkgs[*]}"; else sudo dnf install -y "${pkgs[@]}" 2>&1 | tail -8; fi ;;
-    zypper) if $DRY_RUN; then dry "sudo zypper install -y ${pkgs[*]}"; else sudo zypper install -y "${pkgs[@]}" 2>&1 | tail -8; fi ;;
-    brew) if $DRY_RUN; then dry "brew install ${pkgs[*]}"; else brew install "${pkgs[@]}" 2>&1 | tail -8; fi ;;
-    *) err "Unknown PKG $PKG skip ${pkgs[*]}"; return 1 ;;
+    apt) if $DRY_RUN; then dry "sudo apt install -y ${missing[*]}"; else sudo apt update -qq 2>&1 | tail -3; sudo apt install -y "${missing[@]}" 2>&1 | tail -8; fi ;;
+    pacman) if $DRY_RUN; then dry "sudo pacman -S --noconfirm ${missing[*]}"; else sudo pacman -S --noconfirm "${missing[@]}" 2>&1 | tail -8; fi ;;
+    dnf) if $DRY_RUN; then dry "sudo dnf install -y ${missing[*]}"; else sudo dnf install -y "${missing[@]}" 2>&1 | tail -8; fi ;;
+    zypper) if $DRY_RUN; then dry "sudo zypper install -y ${missing[*]}"; else sudo zypper install -y "${missing[@]}" 2>&1 | tail -8; fi ;;
+    brew) if $DRY_RUN; then dry "brew install ${missing[*]}"; else brew install "${missing[@]}" 2>&1 | tail -8; fi ;;
+    *) err "Unknown PKG $PKG skip ${missing[*]}"; return 1 ;;
   esac
 }
 
@@ -237,7 +261,7 @@ if should_run node && ask node "node/nvm"; then section node "Node via nvm (+fal
   ok node; else skip node; fi
 if should_run js-tools && ask js-tools "js-tools"; then section js-tools "JS tools (yarn/pnpm/bun/deno)"
   case "$PKG" in apt) install_pkg yarn || true;; pacman) install_pkg yarn pnpm bun deno || true;; dnf) install_pkg yarn || true;; brew) install_pkg yarn pnpm bun deno || true;; esac
-  if $DRY_RUN; then dry "npm i -g yarn pnpm"; else npm i -g yarn pnpm 2>&1 | tail -3 || true; fi; ok js-tools; else skip js-tools; fi
+  if $DRY_RUN; then dry "npm i -g yarn pnpm (skip if have_cmd yarn/pnpm)"; else have_cmd yarn || npm i -g yarn 2>&1 | tail -2 || true; have_cmd pnpm || npm i -g pnpm 2>&1 | tail -2 || true; fi; ok js-tools; else skip js-tools; fi
 
 # java + java-tools + kotlin
 if should_run java && ask java "java 17-26"; then section java "Java 17–26 (SDKMAN + native)"
@@ -260,9 +284,10 @@ if should_run kotlin && ask kotlin "kotlin"; then section kotlin "Kotlin"
 # go/rust/ruby/php/lua/zig/dart
 if should_run go && ask go "go"; then section go "Go"; case "$PKG" in apt) install_pkg golang-go || install_pkg golang || true;; pacman) install_pkg go || true;; dnf) install_pkg golang || true;; brew) install_pkg go || true;; esac; ok go; else skip go; fi
 if should_run rust && ask rust "rust"; then section rust "Rust (rustup)"
-  if $DRY_RUN; then dry "curl --proto https://sh.rustup.rs -sSf | sh -s -- -y + rustup component add rust-analyzer clippy rustfmt"
+  if have_cmd rustc && have_cmd cargo; then info "already installed, skip rustup: $(rustc --version 2>&1 | head -1)"
+  elif $DRY_RUN; then dry "curl --proto https://sh.rustup.rs -sSf | sh -s -- -y + rustup component add rust-analyzer clippy rustfmt"
   else curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y 2>&1 | tail -3 || true; source "$HOME/.cargo/env" 2>/dev/null || true; rustup component add rust-analyzer clippy rustfmt 2>&1 | tail -2 || true; fi
-  case "$PKG" in pacman) install_pkg rustup || true;; *) true;; esac; ok rust; else skip rust; fi
+  case "$PKG" in pacman) have_cmd rustup || install_pkg rustup || true;; *) true;; esac; ok rust; else skip rust; fi
 if should_run ruby && ask ruby "ruby/php/lua"; then section ruby "Ruby/PHP/Lua"
   case "$PKG" in apt) install_pkg ruby ruby-dev php php-cli lua5.4 || true;; pacman) install_pkg ruby php lua || true;; dnf) install_pkg ruby php lua || true;; brew) install_pkg ruby php lua || true;; esac; ok ruby; else skip ruby; fi
 if should_run php && ask php "php extra"; then section php "PHP composer"; if $DRY_RUN; then dry "php composer install"; else php --version 2>&1 | head -2 || true; fi; ok php; else skip php; fi
@@ -364,6 +389,47 @@ if should_run security && ask security "security"; then section security "Securi
 if should_run ssh && ask ssh "ssh server"; then section ssh "SSH"
   case "$PKG" in apt) install_pkg openssh-client openssh-server mosh || true;; pacman) install_pkg openssh mosh || true;; dnf) install_pkg openssh mosh || true;; brew) install_pkg openssh mosh || true;; esac; ok ssh; else skip ssh; fi
 
+# terminal / prompt / fetch / browser — PHASE 1 size-ordered: smallest → largest
+# OS is detected first (detect_os → $OS/$PKG); each block uses native mgr:
+# arch → pacman, debian/ubuntu/zorin → apt, fedora → dnf, suse → zypper, macos → brew
+# Order: fastfetch (~2MB) → starship (~8MB) → kitty (~35MB) → librewolf (~120MB)
+if should_run fastfetch && ask fastfetch "fastfetch"; then section fastfetch "Fastfetch (sysinfo, ~2MB)"
+  case "$PKG" in
+    apt) install_pkg fastfetch || true ;;
+    pacman) install_pkg fastfetch || true ;;
+    dnf) install_pkg fastfetch || true ;;
+    brew) install_pkg fastfetch || true ;;
+  esac; ok fastfetch; else skip fastfetch; fi
+if should_run starship && ask starship "starship prompt"; then section starship "Starship prompt (~8MB, starship.rs)"
+  case "$PKG" in
+    apt) install_pkg starship || true ;;
+    pacman) install_pkg starship || true ;;
+    dnf) install_pkg starship || true ;;
+    brew) install_pkg starship || true ;;
+  esac
+  if ! command -v starship >/dev/null 2>&1; then
+    if $DRY_RUN; then dry "curl -sS https://starship.rs/install.sh | sh -s -- -y"; else curl -sS https://starship.rs/install.sh | sh -s -- -y 2>&1 | tail -5 || true; fi
+  fi; ok starship; else skip starship; fi
+if should_run kitty && ask kitty "kitty terminal"; then section kitty "Kitty terminal (~35MB)"
+  case "$PKG" in
+    apt) install_pkg kitty kitty-terminfo || install_pkg kitty || true ;;
+    pacman) install_pkg kitty || true ;;
+    dnf) install_pkg kitty || true ;;
+    brew) install_pkg --cask kitty 2>/dev/null || brew install kitty || true ;;
+  esac; ok kitty; else skip kitty; fi
+if should_run librewolf && ask librewolf "librewolf browser"; then section librewolf "LibreWolf browser (~120MB, largest of set)"
+  case "$PKG" in
+    apt) if $DRY_RUN; then dry "add librewolf repo (apt) + sudo apt install librewolf"; else
+           if [ ! -f /etc/apt/sources.list.d/librewolf.sources ]; then
+             sudo apt update && sudo apt install -y extrepo 2>&1 | tail -2 || true
+             sudo extrepo enable librewolf 2>&1 | tail -2 || true
+           fi
+           sudo apt update 2>&1 | tail -2 || true; install_pkg librewolf || true; fi ;;
+    pacman) install_pkg librewolf librewolf-bin 2>/dev/null || install_pkg librewolf || true ;;
+    dnf) if $DRY_RUN; then dry "sudo dnf copr enable bgstack15/librewolf + install"; else sudo dnf copr enable -y bgstack15/librewolf 2>&1 | tail -2 || true; install_pkg librewolf || true; fi ;;
+    brew) install_pkg --cask librewolf 2>/dev/null || brew install librewolf || true ;;
+  esac; ok librewolf; else skip librewolf; fi
+
 # android rom/kernel/sdk
 if should_run android-rom && ask android-rom "android-rom"; then section android-rom "Android ROM deps"
   case "$PKG" in
@@ -405,7 +471,7 @@ if should_run git || should_run base; then echo -e "${BOLD}• git defaultBranch
 if should_run python; then echo -e "${BOLD}• python pip${NC}"; if $DRY_RUN; then dry "pip upgrade + python3.11 --version"; else python3 -m pip install --user --upgrade pip 2>&1 | tail -2 || true; python3.11 --version 2>&1 | head -1 || python3 --version; fi; fi
 # node nvm
 if should_run node; then echo -e "${BOLD}• node 24.16${NC}"; export NVM_DIR="$HOME/.nvm"
-  if [ -s "$NVM_DIR/nvm.sh" ]; then source "$NVM_DIR/nvm.sh"; if $DRY_RUN; then dry "nvm install 24.16.0 && alias default"; else nvm install 24.16.0 2>&1 | tail -3; nvm alias default 24.16.0 2>&1 | tail -1; node --version; fi
+  if [ -s "$NVM_DIR/nvm.sh" ]; then source "$NVM_DIR/nvm.sh"; if $DRY_RUN; then dry "nvm install 24.16.0 && alias default (skip if node v24.16.x present)"; elif node --version 2>/dev/null | grep -q "v24\.16"; then info "already installed, skip node: $(node --version)"; else nvm install 24.16.0 2>&1 | tail -3; nvm alias default 24.16.0 2>&1 | tail -1; node --version; fi
     add_rc "NVM_DIR" '# NVM (PHASE 2)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' "$HOME/.bashrc" "$HOME/.zshrc"; fi; fi
@@ -441,6 +507,69 @@ if should_run sdk; then echo -e "${BOLD}• android SDK PATH${NC}"; AH=""; for c
 if should_run android-kernel; then echo -e "${BOLD}• ccache + ~/bin${NC}"; if $DRY_RUN; then dry "ccache --max-size=50G"; else mkdir -p ~/.ccache; ccache --max-size=50G 2>&1 | tail -1 || true; fi
   add_rc "USE_CCACHE" 'export USE_CCACHE=1 # ccache (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"
   add_rc '$HOME/bin' 'export PATH="$HOME/bin:$PATH" # ~/bin (PHASE 2)' "$HOME/.bashrc" "$HOME/.zshrc"; fi
+# fastfetch / starship / kitty / librewolf tweaks (PHASE 2: config + shell init — no installs)
+if should_run fastfetch; then echo -e "${BOLD}• fastfetch config${NC}"
+  if $DRY_RUN; then dry "mkdir ~/.config/fastfetch + fastfetch --gen-config + verify"; else
+    mkdir -p "$HOME/.config/fastfetch" || true
+    fastfetch --gen-config 2>&1 | tail -2 || true
+    fastfetch --version 2>&1 | head -2 || true
+  fi; fi
+if should_run starship; then echo -e "${BOLD}• starship.toml + shell init${NC}"
+  if $DRY_RUN; then dry "create ~/.config/starship.toml + init starship in .bashrc/.zshrc"; else
+    mkdir -p "$HOME/.config" || true
+    if [ ! -f "$HOME/.config/starship.toml" ]; then
+      cat > "$HOME/.config/starship.toml" <<'TOML'
+# starship.toml — auto-generated by cross-platform.sh (PHASE 2)
+format = "$all"
+add_newline = true
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+[git_branch]
+symbol = "🌱 "
+[git_status]
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+[cmd_duration]
+min_time = 500
+format = "took [$duration](bold yellow) "
+[time]
+disabled = false
+format = "🕙[$time]($style) "
+TOML
+      log "created ~/.config/starship.toml"
+    else info "starship.toml exists"; fi
+    command -v starship >/dev/null 2>&1 && starship --version 2>&1 | head -1 || true
+  fi
+  add_rc 'starship init' '# Starship (PHASE 2)
+eval "$(starship init bash)"' "$HOME/.bashrc"
+  add_rc 'starship init zsh' '# Starship (PHASE 2)
+eval "$(starship init zsh)"' "$HOME/.zshrc"; fi
+if should_run kitty; then echo -e "${BOLD}• kitty config${NC}"
+  if $DRY_RUN; then dry "mkdir ~/.config/kitty + kitty.conf defaults + verify"; else
+    mkdir -p "$HOME/.config/kitty" || true
+    if [ ! -f "$HOME/.config/kitty/kitty.conf" ]; then
+      cat > "$HOME/.config/kitty/kitty.conf" <<'KITTY'
+# kitty.conf — auto-generated by cross-platform.sh (PHASE 2)
+font_family JetBrains Mono
+font_size 12.0
+background_opacity 0.95
+confirm_os_window_close 0
+enable_audio_bell no
+KITTY
+      log "created ~/.config/kitty/kitty.conf"
+    else info "kitty.conf exists"; fi
+    kitty --version 2>&1 | head -1 || true
+  fi; fi
+if should_run librewolf; then echo -e "${BOLD}• librewolf verify${NC}"
+  if $DRY_RUN; then dry "librewolf --version + policies.json hardening note"; else
+    librewolf --version 2>&1 | head -2 || true
+    mkdir -p "$HOME/.librewolf" || true
+  fi; fi
 # fd/bat symlinks
 if should_run sysutils; then if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then if $DRY_RUN; then dry "ln fdfind→fd"; else sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd || true; fi; fi
   if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then if $DRY_RUN; then dry "ln batcat→bat"; else sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat || true; fi; fi; fi

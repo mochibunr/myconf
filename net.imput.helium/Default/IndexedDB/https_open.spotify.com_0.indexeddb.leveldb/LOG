@@ -1,6 +1,0 @@
-2026/09/20-16:16:19.822 25430 Creating DB /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_open.spotify.com_0.indexeddb.leveldb since it was missing.
-2026/09/20-16:16:19.827 25430 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/IndexedDB/https_open.spotify.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/09/20-16:16:50.984 25430 Level-0 table #5: started
-2026/09/20-16:16:50.987 25430 Level-0 table #5: 100592 bytes OK
-2026/09/20-16:16:50.989 25430 Delete type=0 #3
-2026/09/20-16:16:50.989 25430 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

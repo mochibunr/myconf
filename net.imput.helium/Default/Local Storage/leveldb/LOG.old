@@ -1,3 +1,48 @@
-2026/09/20-16:55:10.232 5 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/Local Storage/leveldb/MANIFEST-000001
-2026/09/20-16:55:10.234 5 Recovering log #371
-2026/09/20-16:55:10.234 5 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/Local Storage/leveldb/000371.log 
+2026/09/20-17:02:42.976 5 Reusing MANIFEST /home/mochibunr/.config/net.imput.helium/Default/Local Storage/leveldb/MANIFEST-000001
+2026/09/20-17:02:42.977 5 Recovering log #371
+2026/09/20-17:02:42.977 5 Reusing old log /home/mochibunr/.config/net.imput.helium/Default/Local Storage/leveldb/000371.log 
+2026/09/20-17:03:42.990 7 Level-0 table #375: started
+2026/09/20-17:03:42.995 7 Level-0 table #375: 31471 bytes OK
+2026/09/20-17:03:42.997 7 Delete type=0 #371
+2026/09/20-17:23:07.572 7 Level-0 table #377: started
+2026/09/20-17:23:07.576 7 Level-0 table #377: 38862 bytes OK
+2026/09/20-17:23:07.580 7 Delete type=0 #374
+2026/09/20-17:38:45.083 7 Level-0 table #379: started
+2026/09/20-17:38:45.086 7 Level-0 table #379: 40547 bytes OK
+2026/09/20-17:38:45.089 7 Delete type=0 #376
+2026/09/20-17:38:45.089 7 Compacting 4@0 + 1@1 files
+2026/09/20-17:38:45.114 7 Generated table #380@0: 969 keys, 1596688 bytes
+2026/09/20-17:38:45.114 7 Compacted 4@0 + 1@1 files => 1596688 bytes
+2026/09/20-17:38:45.116 7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/20-17:38:45.117 7 Delete type=2 #377
+2026/09/20-17:38:45.117 7 Delete type=2 #372
+2026/09/20-17:38:45.117 7 Delete type=2 #375
+2026/09/20-17:38:45.117 7 Delete type=2 #370
+2026/09/20-17:38:45.117 7 Delete type=2 #379
+2026/09/20-17:47:35.785 7 Level-0 table #382: started
+2026/09/20-17:47:35.786 7 Level-0 table #382: 17410 bytes OK
+2026/09/20-17:47:35.788 7 Delete type=0 #378
+2026/09/20-17:50:06.459 7 Level-0 table #384: started
+2026/09/20-17:50:06.464 7 Level-0 table #384: 32480 bytes OK
+2026/09/20-17:50:06.467 7 Delete type=0 #381
+2026/09/20-18:25:00.403 7 Level-0 table #386: started
+2026/09/20-18:25:00.407 7 Level-0 table #386: 14279 bytes OK
+2026/09/20-18:25:00.410 7 Delete type=0 #383
+2026/09/20-18:41:52.352 7 Level-0 table #388: started
+2026/09/20-18:41:52.357 7 Level-0 table #388: 33563 bytes OK
+2026/09/20-18:41:52.360 7 Delete type=0 #385
+2026/09/20-18:41:52.360 7 Compacting 4@0 + 1@1 files
+2026/09/20-18:41:52.383 7 Generated table #389@0: 975 keys, 1596718 bytes
+2026/09/20-18:41:52.383 7 Compacted 4@0 + 1@1 files => 1596718 bytes
+2026/09/20-18:41:52.387 7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/20-18:41:52.387 7 Delete type=2 #386
+2026/09/20-18:41:52.387 7 Delete type=2 #382
+2026/09/20-18:41:52.387 7 Delete type=2 #388
+2026/09/20-18:41:52.387 7 Delete type=2 #384
+2026/09/20-18:41:52.387 7 Delete type=2 #380
+2026/09/20-18:54:15.180 7 Level-0 table #391: started
+2026/09/20-18:54:15.186 7 Level-0 table #391: 11639 bytes OK
+2026/09/20-18:54:15.191 7 Delete type=0 #387
+2026/09/20-19:11:04.402 7 Level-0 table #393: started
+2026/09/20-19:11:04.407 7 Level-0 table #393: 23123 bytes OK
+2026/09/20-19:11:04.411 7 Delete type=0 #390
