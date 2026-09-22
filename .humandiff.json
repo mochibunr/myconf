@@ -1,0 +1,11 @@
+{
+  "ignore": [
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    "node_modules/**"
+  ],
+  "criticalPaths": [
+    "src/"
+  ]
+}

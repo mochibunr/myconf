@@ -1,3 +1,18 @@
 2026/09/22-18:09:14.500 5 Reusing MANIFEST /home/mochibunr/.config/BraveSoftware/Brave-Browser/Default/Local Storage/leveldb/MANIFEST-000001
 2026/09/22-18:09:14.501 5 Recovering log #435
 2026/09/22-18:09:14.501 5 Reusing old log /home/mochibunr/.config/BraveSoftware/Brave-Browser/Default/Local Storage/leveldb/000435.log 
+2026/09/22-18:19:56.985 7 Level-0 table #439: started
+2026/09/22-18:19:56.989 7 Level-0 table #439: 26765 bytes OK
+2026/09/22-18:19:56.991 7 Delete type=0 #435
+2026/09/22-18:20:56.984 7 Level-0 table #441: started
+2026/09/22-18:20:56.987 7 Level-0 table #441: 29409 bytes OK
+2026/09/22-18:20:56.990 7 Delete type=0 #438
+2026/09/22-18:20:56.990 7 Compacting 4@0 + 1@1 files
+2026/09/22-18:20:56.996 7 Generated table #442@0: 1110 keys, 214789 bytes
+2026/09/22-18:20:56.996 7 Compacted 4@0 + 1@1 files => 214789 bytes
+2026/09/22-18:20:56.998 7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/22-18:20:56.998 7 Delete type=2 #441
+2026/09/22-18:20:56.999 7 Delete type=2 #436
+2026/09/22-18:20:56.999 7 Delete type=2 #439
+2026/09/22-18:20:56.999 7 Delete type=2 #431
+2026/09/22-18:20:56.999 7 Delete type=2 #433
